@@ -19,7 +19,7 @@ def sample():
 @app.route('/session', methods=['GET','POST'])
 def sessions():
     if(request.method == 'POST'):
-        session['user'] = (request.form['username'])
+        session['user'] = request.form['username']
         return render_template('session.html', user=session['user'])
     else:
         session.clear()
@@ -37,5 +37,5 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
     socketio.emit('my response', json, callback=messageReceived)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
-    # app.run()
+    # socketio.run(app, debug=True)
+    app.run()
