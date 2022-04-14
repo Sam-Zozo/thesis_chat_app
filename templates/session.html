@@ -22,12 +22,17 @@
                     <div id="prepend"></div>
                 </div>
             </div>
-            <form action="" class="form-inline" name="form" id="form" method="POST"> 
-                <div class="form-group mx-sm-2 mb-2">
-                    <input type="text" class="message form-control" id="message" placeholder="Your Message">
-                <input type="text" readonly class="username " hidden id="username" value="{{user}}"/>
+            <form action="" name="form" id="form" method="POST"> 
+                <div class="d-flex justify-content-between">
+                    <div class="form-group mx-sm-2 mx-auto w-100">
+                        <input type="text"  class="message form-control w-100" id="message" placeholder="Your Message">
+                        <input type="text"  readonly class="username " hidden id="username" value="{{user}}"/>
+                    </div>
+                    <div class="form-group mx-sm-2 justify-content-end">
+                        <button type="submit" class="btn btn-primary mb-2">Send</button>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Send</button>
+               
               </form>
         </div>
         
