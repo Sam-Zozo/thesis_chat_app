@@ -9,6 +9,7 @@ flask-socketio = "*"
 gunicorn = "*"
 gevent-websocket = "*"
 eventlet = "==0.30.2"
+nltk = "*"
 
 [dev-packages]
 

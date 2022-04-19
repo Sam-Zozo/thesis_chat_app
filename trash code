@@ -1,0 +1,52 @@
+# def removeDuplicates(string):
+#     # Base Case1
+#     if not string:
+#         return ""
+
+#     # Base Case2
+#     elif len(string) == 1 :
+#         return string
+
+#     # Recursive Case1
+    
+#     elif string[0] == string[1:] :
+#         if string[1] == string[2:]:
+#             return removeDuplicates(string[2:])
+#         # return removeDuplicates(string[1:])
+
+#     # Recursive Case2
+#     return string[0] + removeDuplicates(string[1:])
+
+# # Driver Code
+
+# # x = 'ammmmppuuuuuttaaaa'
+# # print(x[1:])
+# print(removeDuplicates('aaaaammmmppuuuuuttaaaa'))
+
+# def remove_duplicate_chars(word):
+#     backup =word
+#     l = list()
+#     prev = None
+#     for char in word:
+#         if prev != char:
+#             l.append(char)
+        # if backup[i] == backup[i+1]:
+        #     if(backup[i+1] == backup[i+2]):
+        #         word = backup.replace(backup[i], '')
+
+    # print(word)
+    # return backup
+
+
+# def removeDuplicates(word):
+#     chars1 = []
+#     prev = None
+#     for char in word:
+#         if prev != char:
+#             chars1.append(char)
+#             chars1.append(char)
+#             prev = char
+            
+#     return ''.join(chars1)
+    
+# print(removeDuplicates('amputa'))
