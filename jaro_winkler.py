@@ -86,8 +86,8 @@ if __name__ == '__main__':
     # \abcd
     # V-I-A-G-R-A
 
-    # print(jaro_Winkler('jakol', 'j*kol'))
-    print(re.sub(r'[^\w]','','p-u-!!!!!!!!!!!-n-a-m-o'))
+    print(jaro_Winkler('ggaaggoo', 'gago'))
+    # print(re.sub(r'[^\w]','','p-u-!!!!!!!!!!!-n-a-m-o'))
     # "p-u-t-a-n-g-i-n-a-m-o",'putanginamo'
     # [([a-z]),[(+*)]]
     # do regex: if profane, remove all chars then check ; if not check for pattern in string
