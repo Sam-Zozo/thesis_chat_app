@@ -4,7 +4,7 @@ from data.filipino_stopwords import filipino_stopwords
 from data.tagalog_words import tagalog_words
 from nltk import regexp_tokenize
 import nltk
-
+import  string
 
 alt_chars = {
     'a':['4','@','λ','∂','*'],
@@ -12,12 +12,12 @@ alt_chars = {
     'd':['|]','l]','1]','|)','l)','1)','[)','|}','l]','1}','])','i>','|>','l>','1>','cl','o|','o1','ol','Ð','∂','ð'],
     'e':['3','&','[-','€','ii','ə','£','iii','*'],
     'f':['|=',']=','}','(=','[=','ʃ'],
-    'g':['6','9','&','(_+','C-','cj','[','(γ,','(_-'],
+    'g':['6','9','q','&','(_+','C-','cj','[','(γq','(_-'],
     'h':['|-|','#','[-]','{-}',']-[',')-(','(-)',':-:','}{','}-{','aych','╫',']]-[['],
-    'i':['!','1','|','*'],
-    'j':['dy','ĵ','Ĵ','ǰ','ɉ','Ɉ'],
-    'k':['|<','|x','|{','/<','\\<','/x','\\x','ɮ','c'],
-    'l':['1','7','|_','1_','l_','lJ','£','¬','el'],
+    'i':['!','1','|','*','y'],
+    'j':[';','dy','ĵ','Ĵ','ǰ','ɉ','Ɉ'],
+    'k':['q','|<','|x','|{','/<','\\<','/x','\\x','ɮ','c'],
+    'l':['1','|','1_','l_','lJ','£','¬','el'],
     'm':['/\/\\','|\\/|','em','|v|','[v]','^^','nn','//\\\\//\\\\','/|\\','/|/|','.\\\\','/^^\\','/V\\','|^^|'],
     'n':['|\\|','/\\/','//\\\\//','[\\]','<\\>','{\\}','//','[]\\[]',']\\[','~','₪','/|/','in'],
     'o':['0','()','oh','[]','¤','Ω','ω','*','[[]]','oh'],
@@ -25,10 +25,10 @@ alt_chars = {
     'r':['|2','l2','12','2','/2','I2','|^','l^','1^','|~','l~','1~','lz','[z','|`','l`','1`','.-','®','Я','ʁ','|?','l?','1?','arr'],
     's':['5','$','z','es','2','§','š'],
     't':['7','+','-|-','-l-','-1-','1','†'],
-    'u':['|_|','l_l','1_1','(_)','[_]','{_}','y3w','\\_/','\\_\\','/_/','µ','yew','yoo','yuu'],
+    'u':['|_|','l_l','1_1','(_)','[_]','{_}','y3w','\\_/','\\_\\','/_/','v','yew','yoo','yuu'],
     'v':['\\/','\\\\//','√'],
     'w':['\\/\\/','vv','\\^/','\\x/','\\|/','\\_|_/','\\_l_/','\\//\\//','\\_:_/',']i[','uu','Ш','ɰ','\\/1/','1/1/'],
-    'y':['`/','Ψ','φ','λ','Ч','¥'],
+    'y':['i','`/','Ψ','φ','λ','Ч','¥'],
 }
 
 def whitespace_tokenizer(string):
@@ -47,21 +47,36 @@ def leet_checker(tokens):
         else:
             temp[key] = {'isLeet':  False}
     
-    for key ,value in temp.items():
-        print(key, value)
+    # for key ,value in temp.items():
+    #     print(key, value)
     return temp
 
 def is_leet(word):
     if not word.isalpha():
         return True
     return False
+    # special_chars = string.punctuation
+    # numbers = '1234567890'
+    
+    # x = [n for n in numbers if n in word]
+    # x += [c for c in special_chars if c in word]
+    # return x
+    # for i in range(len(word)):
+    #     if word[i] in special_chars and :
+    # for key, value in alt_chars.items():
+    #     for v in value:
+    #         if v in word:
+    #             print('')
+    # return False
+            
+
+
 
 # character level translation of leet to tagalog
 def word_leet_to_tagalog(word):
     bWord = word
     for char in word:
         char_leet_equivalent_dict = filter_the_dict(alt_chars, lambda elem: char in elem[1])
-        # print("char leet equivalent: ",char_leet_equivalent_dict)
         if char_leet_equivalent_dict: # if not empty
             key = [k for k,v in char_leet_equivalent_dict.items() if char in v]
             bWord = bWord.replace(char,key[0])
@@ -76,21 +91,19 @@ def filter_the_dict(dictObj, callback):
             newDict[key] = value
     return newDict
 
-# removing stopwords check if pwede mag binary search
+# marking stopwords
 def stopwords_checker(tokens):
     temp=tokens
     for key in tokens:
         if key in filipino_stopwords:
             temp[key]['isStopword'] = True
-
         else:
             temp[key]['isStopword'] = False
-
     return temp
 
 #mag binary dito 
+
 def filipino_word_checker(tokens):
-    
     temp=tokens
     for key, value in tokens.items():
         if value['isStopword']:
@@ -124,7 +137,8 @@ def init_default_values(tokens):
         tokens[key]['isProfane'] = False
     return tokens
 
-
+# print(string.punctuation)
+# print(word_leet_to_tagalog('pu7@n6!na'))
 # title = 'ang p 3 t s a  ng@yon ay pebrero ng bente-sais,  d@law@ng l!bo\'t bente dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
 # sample = 'puta yayamanin jakol hhhh mahal pakiskis pakita g@go'
 # tokens = whitespace_tokenizer(sample)

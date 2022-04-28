@@ -24,20 +24,17 @@ def binary_search(arr, lower_bound, upper_bound, word):
 
 def clean_text(string):
     string = to_lowercase(string)
-    tokens = whitespace_tokenizer(string)
-    tokens = leet_checker(tokens)        
-    tokens = stopwords_checker(tokens)
-    tokens = init_default_values(tokens)
+    tokens = init_default_values(stopwords_checker(leet_checker(whitespace_tokenizer(string))))
     for key, value in tokens.items():
         if value['isStopword'] == False:
             if value['isLeet'] == True:
-                x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) > 0.84]
+                x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) > 0.7]
                 if x:
                     tokens[key]['isProfane']  = True
                 else:
                     tokens[key]['isProfane']  = False
             else:
-                x = [x for x in raw_profanity if jaro_Winkler(key,x) > 0.84]
+                x = [x for x in raw_profanity if jaro_Winkler(key,x) > 0.7]
                 if x:
                     tokens[key]['isProfane']  = True
                 else:
@@ -61,7 +58,7 @@ if __name__ == "__main__":
     
     end = time.time()
     print('time: ', end - start)
-    for key, value in tokens.items():
-        # if value['isProfane'] == True:
-            print(key, value)
+    # for key, value in tokens.items():
+    #     # if value['isProfane'] == True:
+    #         print(key, value)
 

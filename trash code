@@ -50,3 +50,26 @@
 #     return ''.join(chars1)
     
 # print(removeDuplicates('amputa'))
+
+# k=0
+# print(len(raw_profanity))
+# for c in raw_profanity:
+    
+#     print(c, ': ', h1[k], ': ', h2[k],': ',h3[k],': ',h4[k],': ',h5[k])
+    
+#     k+=1
+# print(len(fi))
+# print(len(se))
+# print(len(th))
+# print(len(fo))
+# print(len(fif))
+# print(len(six))
+# print(len(sev))
+# print(len(ei))
+# print(len(ni))
+# print(len(ten))
+# print(len(h1))
+# print(len(h2))
+# print(len(h3))
+# print(len(h4))
+# print(len(h5))
