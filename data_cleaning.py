@@ -2,33 +2,33 @@ import re
 from tokenize import Special
 from data.filipino_stopwords import filipino_stopwords
 from data.tagalog_words import tagalog_words
+# from data.tagalog_words2 import tagalog_words as t2
 from nltk import regexp_tokenize
 import nltk
-import  string
 
 alt_chars = {
-    'a':['4','@','λ','∂','*'],
-    'b':['8','|3','6','13','l3',']3','|o','1o','lo','ß',']]3','|8','l8','18',']8'],
-    'd':['|]','l]','1]','|)','l)','1)','[)','|}','l]','1}','])','i>','|>','l>','1>','cl','o|','o1','ol','Ð','∂','ð'],
-    'e':['3','&','[-','€','ii','ə','£','iii','*'],
-    'f':['|=',']=','}','(=','[=','ʃ'],
-    'g':['6','9','q','&','(_+','C-','cj','[','(γq','(_-'],
-    'h':['|-|','#','[-]','{-}',']-[',')-(','(-)',':-:','}{','}-{','aych','╫',']]-[['],
+    'a':["à","4","@","^","ci","λ","∂","ae","ä","*"],
+    'b':['8','⒝','13','൫','ß','|8','l8','18','ḃ','v'],
+    'd':['ḋ','ď','Ḋ','|)','])','cl','Ð','∂','ð','[)'],
+    'e':['3','&','é','€','ii','ə','£','iii','*','ɇ'],
+    'f':['ƒ',']=','}','(=','[=','ph','Ƒ','ḟ','Ḟ','ⓕ'],   
+    'g':['6','9','q','(_-','ĝ','ǧ','ḡ','ģ','ǥ','ɠ'],
+    'h':['|-|','#',']-[',')-(','}{','}-{','ḣ','ĥ','ȟ','ħ'], 
     'i':['!','1','|','*','y'],
-    'j':[';','dy','ĵ','Ĵ','ǰ','ɉ','Ɉ'],
+    'j':['dy','ĵ','Ĵ','ǰ','ɉ','Ɉ'],
     'k':['q','|<','|x','|{','/<','\\<','/x','\\x','ɮ','c'],
-    'l':['1','|','1_','l_','lJ','£','¬','el'],
+    'l':['ł','1','|','1_','l_','lJ','£','¬','el'],
     'm':['/\/\\','|\\/|','em','|v|','[v]','^^','nn','//\\\\//\\\\','/|\\','/|/|','.\\\\','/^^\\','/V\\','|^^|'],
-    'n':['|\\|','/\\/','//\\\\//','[\\]','<\\>','{\\}','//','[]\\[]',']\\[','~','₪','/|/','in'],
-    'o':['0','()','oh','[]','¤','Ω','ω','*','[[]]','oh'],
+    'n':['ñ','ń','|\\|','/\\/','//\\\\//','[\\]','<\\>','{\\}','//','[]\\[]',']\\[','~','₪','/|/','in'],
+    'o':['ô','ö','ò','ó','œ','ø','ō','õ','0','()','oh','[]','¤','Ω','ω','*','[[]]','oh'],
     'p':['|o','lo','1o','|>','|7','l7','17','q','|d','ld','1d','℗','|º','1º','lº','þ','¶'],
     'r':['|2','l2','12','2','/2','I2','|^','l^','1^','|~','l~','1~','lz','[z','|`','l`','1`','.-','®','Я','ʁ','|?','l?','1?','arr'],
-    's':['5','$','z','es','2','§','š'],
-    't':['7','+','-|-','-l-','-1-','1','†'],
-    'u':['|_|','l_l','1_1','(_)','[_]','{_}','y3w','\\_/','\\_\\','/_/','v','yew','yoo','yuu'],
-    'v':['\\/','\\\\//','√'],
-    'w':['\\/\\/','vv','\\^/','\\x/','\\|/','\\_|_/','\\_l_/','\\//\\//','\\_:_/',']i[','uu','Ш','ɰ','\\/1/','1/1/'],
-    'y':['i','`/','Ψ','φ','λ','Ч','¥'],
+    's':['5','ß','ś','$','z','es','ʃ','§','š'],
+    't':['7','ł','+','-|-','-l-','-1-','1','†'],
+    'u':['v','l_l','1_1','(_)','[_]','{_}','y3w','\\_/','\\_\\','/_/','v','yew','yoo','yuu'],
+    'v':['ʌ','\/','√','l/','|/'],
+    'w':['\\/\\/','vv','\\^/','\\x/','\\|/','\\_|_/','\\//\\//','\\_:_/','Ш','ɰ'],
+    'y':['i','`/','Ψ','φ','λ','Ч','¥','ÿ'],
 }
 
 def whitespace_tokenizer(string):
@@ -55,22 +55,6 @@ def is_leet(word):
     if not word.isalpha():
         return True
     return False
-    # special_chars = string.punctuation
-    # numbers = '1234567890'
-    
-    # x = [n for n in numbers if n in word]
-    # x += [c for c in special_chars if c in word]
-    # return x
-    # for i in range(len(word)):
-    #     if word[i] in special_chars and :
-    # for key, value in alt_chars.items():
-    #     for v in value:
-    #         if v in word:
-    #             print('')
-    # return False
-            
-
-
 
 # character level translation of leet to tagalog
 def word_leet_to_tagalog(word):
@@ -101,12 +85,11 @@ def stopwords_checker(tokens):
             temp[key]['isStopword'] = False
     return temp
 
-#mag binary dito 
-
 def filipino_word_checker(tokens):
     temp=tokens
     for key, value in tokens.items():
         if value['isStopword']:
+            temp[key]['isDictionaryWord'] = True
             continue
         isWordToSearch = key
         if value['isLeet']:
@@ -127,8 +110,7 @@ def binary_search(arr, lower_bound, upper_bound, word):
         else:
             return binary_search(arr, mid + 1, upper_bound, word)
     else:
-        return -1
-
+        return -1   
 def remove_special_chars(word): 
     return re.sub(r'[^\w]','',word.lower())
 
@@ -149,8 +131,3 @@ def init_default_values(tokens):
 # for key ,value in tokens.items():
 #     print(key, value)
 
-
-
-
-
-    

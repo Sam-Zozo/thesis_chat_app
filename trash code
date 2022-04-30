@@ -73,3 +73,97 @@
 # print(len(h3))
 # print(len(h4))
 # print(len(h5))
+# if binary_search(tagalog_words, 0, len(tagalog_words), isWordToSearch) < 0:
+        #     temp[key]['isDictionaryWord'] = False
+        # else:
+        #     temp[key]['isDictionaryWord'] = True
+
+
+# def binary_search(arr, lower_bound, upper_bound, word):
+#     if upper_bound >= lower_bound:
+#         mid = (upper_bound + lower_bound) // 2
+#         if arr[mid] == word:
+#             return mid
+#         elif arr[mid] > word:
+#             return binary_search(arr, lower_bound, mid - 1, word)
+#         else:
+#             return binary_search(arr, mid + 1, upper_bound, word)
+#     else:
+#         return -1        
+
+
+# def binary_search(arr, lower_bound, upper_bound, word):
+#     if upper_bound >= lower_bound:
+#         mid = (upper_bound + lower_bound) // 2
+#         if arr[mid] == word:
+#             print('present: ',arr[lower_bound:upper_bound])
+#             return mid
+#         elif arr[mid] > word:
+#             print('lb: ', lower_bound, ' ub: ', mid - 1)
+#             return binary_search(arr, lower_bound, mid - 1, word)
+#         else:
+#             print('lb: ', mid+1, ' ub: ', upper_bound)
+#             return binary_search(arr, mid + 1, upper_bound, word)
+#     else:
+#         print('not present: ',arr[lower_bound:upper_bound])
+#         return -1
+
+
+# filipino_dictionary_words = json.loads(open('data/tagalog-words.json'))
+
+# path = Path(__file__).parent / "../data/tagalog-words.json"
+    
+
+# with open('data/tagalog-words.json', 'rb') as  filipino_dictionary_words:
+#     tagalog_dictionary = json.load(filipino_dictionary_words)
+
+# with open('tagalog_words_list.py', 'w') as f:
+   
+#     for t in t1:
+#         if t not in t2:
+#             f.write('\n"%s",' %(t))       
+            # f.write('%s:\n\t%s\n' %(t))
+
+# x = sorted([x.lower() for x in tagalog_words])
+# # print(type(x))
+# with open('tagalog_words_list_final.py', 'w') as f:
+#     f.write('tagalog_words=[\n')
+#     for i in x:
+#         f.write('\n"%s",' %(i))
+#     f.write('\n]')
+
+
+# with open('file.txt', 'w') as file:
+#     for key, value in dictionary.items():
+#         # for value2 in value:
+#         file.write('%s:\n\t%s\n' %(key,value))
+
+# with open('file.txt', 'w') as file:
+#     for key, value in dictionary.items():
+#         # for value2 in value:
+#         file.write('%s:\n\t%s\n' %(key,value))
+
+
+#     'a':['4','@','λ','∂','*','à','á','ä'],
+#     'b':['8','|3','6','13','l3',']3','|o','1o','lo','ß',']]3','|8','l8','18',']8'],
+#     'c':[],
+#     'd':['|]','l]','1]','|)','l)','1)','[)','|}','l]','1}','])','i>','|>','l>','1>','cl','o|','o1','ol','Ð','∂','ð'],
+#     'e':['3','&','[-','€','ii','ə','£','iii','*'],
+#     'f':['|=',']=','}','(=','[=','ʃ'],
+#     'g':['6','9','q','&','(_+','C-','cj','[','(γq','(_-'],
+#     'h':['|-|','#','[-]','{-}',']-[',')-(','(-)',':-:','}{','}-{','aych','╫',']]-[['],
+#     'i':['!','1','|','*','y'],
+#     'j':[';','dy','ĵ','Ĵ','ǰ','ɉ','Ɉ'],
+#     'k':['q','|<','|x','|{','/<','\\<','/x','\\x','ɮ','c'],
+#     'l':['1','|','1_','l_','lJ','£','¬','el'],
+#     'm':['/\/\\','|\\/|','em','|v|','[v]','^^','nn','//\\\\//\\\\','/|\\','/|/|','.\\\\','/^^\\','/V\\','|^^|'],
+#     'n':['|\\|','/\\/','//\\\\//','[\\]','<\\>','{\\}','//','[]\\[]',']\\[','~','₪','/|/','in'],
+#     'o':['0','()','oh','[]','¤','Ω','ω','*','[[]]','oh'],
+#     'p':['|o','lo','1o','|>','|7','l7','17','q','|d','ld','1d','℗','|º','1º','lº','þ','¶'],
+#     'r':['|2','l2','12','2','/2','I2','|^','l^','1^','|~','l~','1~','lz','[z','|`','l`','1`','.-','®','Я','ʁ','|?','l?','1?','arr'],
+#     's':['5','$','z','es','2','§','š'],
+#     't':['7','+','-|-','-l-','-1-','1','†'],
+#     'u':['|_|','l_l','1_1','(_)','[_]','{_}','y3w','\\_/','\\_\\','/_/','v','yew','yoo','yuu'],
+#     'v':['\\/','\\\\//','√'],
+#     'w':['\\/\\/','vv','\\^/','\\x/','\\|/','\\_|_/','\\_l_/','\\//\\//','\\_:_/',']i[','uu','Ш','ɰ','\\/1/','1/1/'],
+#     'y':['i','`/','Ψ','φ','λ','Ч','¥'],

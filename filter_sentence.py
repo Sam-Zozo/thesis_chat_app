@@ -3,7 +3,7 @@ from operator import indexOf
 import re
 from tokenize import Special
 from data.filipino_stopwords import filipino_stopwords
-from data.tagalog_words import tagalog_words
+from trashfiles.tagalog_words import tagalog_words
 import nltk
 from jaro_winkler import jaro_Winkler
 from data.raw_profanity import raw_profanity

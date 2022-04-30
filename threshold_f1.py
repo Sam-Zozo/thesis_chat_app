@@ -110,6 +110,7 @@ b5 = 'angtupa sikat boracay vivo bygon tungo bleach bahay bureau demolition lago
 
 
 dictionary = dict.fromkeys(raw_profanity,{})
+dictionary2 = dict.fromkeys(raw_profanity,{})
 fi = first.split(' ')
 se = second.split(' ')
 th = third.split(' ')
@@ -147,8 +148,10 @@ l18 = a28.split(' ')
 l19 = a29.split(' ')
 l20 = a30.split(' ')
 
+xtotal = 0
+
 def clean_value(word):
-    threshold = 0.99
+    threshold = 0.79
     string = to_lowercase(word)
     tokens = whitespace_tokenizer(string)
     tokens = leet_checker(tokens)
@@ -157,7 +160,8 @@ def clean_value(word):
     tokens = init_default_values(tokens)
     # tokens = init_default_values(filipino_word_checker(stopwords_checker((leet_checker(whitespace_tokenizer(string))))))
     for key, value in tokens.items():
-        if value['isStopword'] == False:
+
+        if value['isStopword'] == False and value['isDictionaryWord'] == False:
             if value['isLeet'] == True:
                 x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) >= threshold]
                 if x:
@@ -180,6 +184,8 @@ def clean_value(word):
 
 # print(clean_value('ibon'))
 i=0
+
+
 start = time.time()
 for key in dictionary:
     if i != 62:
@@ -228,6 +234,23 @@ for key in dictionary:
             }
         )
         i+=1
+i=0
+for key in dictionary2:
+    if i != 62:
+        dictionary2.update(
+            { 
+                key: 
+                    {
+                        h1[i]: clean_value(h1[i]),
+                        h2[i]: clean_value(h2[i]),
+                        h3[i]: clean_value(h3[i]),
+                        h4[i]: clean_value(h4[i]),
+                        h5[i]: clean_value(h5[i]),
+                        h6[i]: clean_value(h6[i]),
+                    }
+            }
+        )
+        i+=1
 
 # print(clean_value('amputa'))
 
@@ -237,6 +260,9 @@ for key in dictionary:
 # for key, value in dictionary.items():
 #     print(key, value)
 
+# for key, value in dictionary.items():
+# xtotal = sum(len(value) for value in dictionary.values())
+# ytotal = sum(len(value) for value in dictionary2.values())
 
 tp = 0 # number of instances correctly predictied that belong to the positive class
 fp = 0 # number of instances incorrectly predicted that belong to the negative class
@@ -248,22 +274,25 @@ for key, value in dictionary.items():
             tp+=1
         else:
             fn+=1
+
+for key, value in dictionary2.items():
+    for value2 in value.values():
         if not value2:
             tn+=1
         else:
             fp+=1
+print('True Positive: ', tp) 
+print('False Negative: ', fn)
+print('False Positive: ', fp)
+print('True Negative: ', tn)
+
+print('Total: ', fn+tp+tn+fp)
+# print('Total True Positive: ', xtotal)
+# print('Total True Negative: ', ytotal)
 end = time.time()
 print('time: ', end - start)
-print('True Negative: ', tn)
-print('False Positive: ', fp)
-print('True Positive: ', tp)
-print('False Negative: ', fn)
 
-# with open('file.txt', 'w') as file:
-#     for key, value in dictionary.items():
-#         # for value2 in value:
-#         file.write('%s:\n\t%s\n' %(key,value))
-
-
+# dictionary = 1449
+# dictionary2 = 371 
 
     

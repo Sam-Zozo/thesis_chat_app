@@ -6,15 +6,20 @@ import re
 import regex
 
 def jaro_distance(s1, s2):
-    if (s1 == s2):
-        return 1.0
-    len1 = len(s1)
+    if (s1 == s2): # if s1 and s2 are the same return a score of 1
+        return 1.0 
+    # initialized length for both string
+    len1 = len(s1) 
     len2 = len(s2)
+    
+    #get max distance 
     max_dist = floor(max(len1, len2) / 2) - 1
     match = 0
-    hash_s1 = [0] * len(s1)
+    hash_s1 = [0] * len(s1) 
     hash_s2 = [0] * len(s2)
     
+    # Iterate through each character., check for matches
+    #s1 = gago s2 = gaggoooo
     for i in range(len1):
         for j in range(max(0, i - max_dist),min(len2, i + max_dist + 1)):
             if (s1[i] == s2[j] and hash_s2[j] == 0):
@@ -22,31 +27,36 @@ def jaro_distance(s1, s2):
                 hash_s2[j] = 1
                 match += 1
                 break
+    # if no match found return a score of 0
     if (match == 0):
         return 0.0
-    t = 0
+
+    # number of characters that match but in the wrong order    
+    transposition = 0
     point = 0
+    # Compute for transpositions.
     for i in range(len1):
         if (hash_s1[i]):
             while (hash_s2[point] == 0):
                 point += 1
             if (s1[i] != s2[point]):
-                t += 1
+                transposition += 1
             point += 1
-    t = t//2
-    return (match/ len1 + match / len2 + (match - t) / match)/ 3.0
+    transposition = transposition//2
+    return (match/ len1 + match / len2 + (match - transposition) / match)/ 3.0
 
 def jaro_Winkler(s1, s2) :
+    # compute for the jaro distance
     jaro_dist = jaro_distance(s1, s2)
     if (jaro_dist > 0.7) :
         prefix = 0
+        # compute for the maximum prefix based on the minimum length of two string
         for i in range(min(len(s1), len(s2))) :
             if (s1[i] == s2[i]) :
                 prefix += 1
             else :
                 break
-
-        prefix = min(4, prefix) # max characters to look beside
+        prefix = min(4, prefix) # max of 4 characters to look 
         jaro_dist += 0.1 * prefix * (1 - jaro_dist)
     return jaro_dist
 
@@ -79,7 +89,16 @@ if __name__ == '__main__':
     # \abcd
     # V-I-A-G-R-A
 
-    print(jaro_Winkler('ggaaggoo', 'gago'))
+    print(jaro_Winkler('tanga', 'tinga'))
+    print(jaro_Winkler('gago', 'kagagohan'))
+    print(jaro_Winkler('Tarantado', 'tarantula'))
+    print(jaro_Winkler('karampot', 'kantot'))
+    print(jaro_Winkler('tamod', 'tatoo'))
+    print(jaro_Winkler('tarantado', 'tato'))
+    print(jaro_Winkler('tamod', 'totoo'))
+    print(jaro_Winkler('tarantado', 'totoo'))
+   
+
     # print(re.sub(r'[^\w]','','p-u-!!!!!!!!!!!-n-a-m-o'))
     # "p-u-t-a-n-g-i-n-a-m-o",'putanginamo'
     # [([a-z]),[(+*)]]
