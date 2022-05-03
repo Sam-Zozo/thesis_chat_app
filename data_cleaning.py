@@ -2,10 +2,12 @@ import re
 from tokenize import Special
 from data.filipino_stopwords import filipino_stopwords
 from data.tagalog_words import tagalog_words
+from data.raw_profanity import raw_profanity
 # from data.tagalog_words2 import tagalog_words as t2
 from nltk import regexp_tokenize
 import nltk
 
+from jaro_winkler import jaro_Winkler
 alt_chars = {
     'a':["à","4","@","^","ci","λ","∂","ae","ä","*"],
     'b':['8','⒝','13','൫','ß','|8','l8','18','ḃ','v'],
@@ -14,7 +16,7 @@ alt_chars = {
     'f':['ƒ',']=','}','(=','[=','ph','Ƒ','ḟ','Ḟ','ⓕ'],   
     'g':['6','9','q','(_-','ĝ','ǧ','ḡ','ģ','ǥ','ɠ'],
     'h':['|-|','#',']-[',')-(','}{','}-{','ḣ','ĥ','ȟ','ħ'], 
-    'i':['!','1','|','*','y'],
+    'i':['!','1','|','*','‡'],
     'j':['dy','ĵ','Ĵ','ǰ','ɉ','Ɉ'],
     'k':['q','|<','|x','|{','/<','\\<','/x','\\x','ɮ','c'],
     'l':['ł','1','|','1_','l_','lJ','£','¬','el'],
@@ -28,7 +30,7 @@ alt_chars = {
     'u':['v','l_l','1_1','(_)','[_]','{_}','y3w','\\_/','\\_\\','/_/','v','yew','yoo','yuu'],
     'v':['ʌ','\/','√','l/','|/'],
     'w':['\\/\\/','vv','\\^/','\\x/','\\|/','\\_|_/','\\//\\//','\\_:_/','Ш','ɰ'],
-    'y':['i','`/','Ψ','φ','λ','Ч','¥','ÿ'],
+    'y':['ỷ','`/','Ψ','φ','λ','Ч','¥','ÿ'],
 }
 
 def whitespace_tokenizer(string):
@@ -124,12 +126,30 @@ def init_default_values(tokens):
 # print(string.punctuation)
 # print(word_leet_to_tagalog('pu7@n6!na'))
 # title = 'ang p 3 t s a  ng@yon ay pebrero ng bente-sais,  d@law@ng l!bo\'t bente dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-# sample = 'puta yayamanin jakol hhhh mahal pakiskis pakita g@go'
+# sample = 'puta qaqo yayamanin jakol hhhh mahal pakiskis pakita g@go'
 # tokens = whitespace_tokenizer(sample)
 # tokens = leet_checker(tokens)
 # tokens = stopwords_checker(tokens)
 # tokens = filipino_word_checker(tokens)
 # tokens = init_default_values(tokens)
+# for key, value in tokens.items():
+#         if value['isStopword'] == False and value['isDictionaryWord'] == False:
+#             if value['isLeet'] == True:
+#                 x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) > 0.78]
+#                 if x:
+#                     tokens[key]['isProfane']  = True
+#                     print(x)
+#                 else:
+#                     tokens[key]['isProfane']  = False
+#             else:
+#                 x = [x for x in raw_profanity if jaro_Winkler(key,x) > 0.78]
+#                 if x:
+#                     tokens[key]['isProfane']  = True
+#                     print(x)
+#                 else:
+#                     tokens[key]['isProfane']  = False
+#         else:
+#             continue
 # for key ,value in tokens.items():
 #     print(key, value)
 

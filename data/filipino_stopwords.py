@@ -153,4 +153,8 @@ filipino_stopwords = ['ba',
  "tulad",
  "tungkol",
  "una",
- "walang"]
+ "walang",
+ "nyo",
+ "nya",
+ "nako",
+ "hay"]
