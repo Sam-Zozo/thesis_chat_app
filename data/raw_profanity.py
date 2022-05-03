@@ -11,6 +11,7 @@ raw_profanity = [
 "demonyo",
 "engot",
 "gago",
+"gunggong",
 "hayop",
 "hinayupak",
 "hudas",
