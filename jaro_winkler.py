@@ -97,6 +97,12 @@ if __name__ == '__main__':
     print(jaro_Winkler('tarantado', 'tato'))
     print(jaro_Winkler('tamod', 'totoo'))
     print(jaro_Winkler('tarantado', 'totoo'))
+    print(jaro_Winkler('taong', 'tanga'))
+    print(jaro_Winkler('talong', 'tanga'))
+    print(jaro_Winkler('taon', 'tanga'))
+    print(jaro_Winkler('t', 'tae'))
+    print(jaro_Winkler('tsitsarong', 'timang'))
+    print(jaro_Winkler('tsitsarong', 'tigang'))
    
 
     # print(re.sub(r'[^\w]','','p-u-!!!!!!!!!!!-n-a-m-o'))

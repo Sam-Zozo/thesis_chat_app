@@ -81,6 +81,8 @@ def stopwords_checker(tokens):
     for key in tokens:
         if key in filipino_stopwords:
             temp[key]['isStopword'] = True
+        elif len(key) < 2:
+            temp[key]['isStopword'] = True
         else:
             temp[key]['isStopword'] = False
     return temp
