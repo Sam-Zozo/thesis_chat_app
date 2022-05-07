@@ -1,5 +1,7 @@
 raw_profanity = [
 "amputa",
+"bading",
+"bakla",
 "bayag",
 "bilat",
 "binibrocha",
@@ -18,6 +20,7 @@ raw_profanity = [
 "gunggong",
 "hayop",
 "hinayupak",
+"hindot",
 "hudas",
 "hunghang",
 "inamo",
@@ -52,6 +55,7 @@ raw_profanity = [
 "putangina",
 "putaragis",
 "ratbu",
+"shit",
 "shunga",
 "siraulo",
 "suso",
@@ -68,6 +72,7 @@ raw_profanity = [
 "tungaw",
 "ugok",
 "ulol",
+"ulupong",
 "ungas",
 "ungol"
 ]
