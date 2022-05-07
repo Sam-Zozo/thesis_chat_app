@@ -58,7 +58,7 @@ def jaro_Winkler(s1, s2) :
                 break
         prefix = min(4, prefix) # max of 4 characters to look 
         jaro_dist += 0.1 * prefix * (1 - jaro_dist)
-    return jaro_dist
+    return round(jaro_dist,2)
 
 if __name__ == '__main__':
     
