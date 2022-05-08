@@ -81,9 +81,7 @@ def filter_the_dict(dictObj, callback):
 def stopwords_checker(tokens):
     temp=tokens
     for key in tokens:
-        if key in filipino_stopwords:
-            temp[key]['isStopword'] = True
-        elif len(key) < 2:
+        if key in filipino_stopwords or len(key) < 2:
             temp[key]['isStopword'] = True
         else:
             temp[key]['isStopword'] = False
@@ -98,7 +96,7 @@ def filipino_word_checker(tokens):
         isWordToSearch = key
         if value['isLeet']:
             isWordToSearch = value['originalWord']
-        if binary_search(tagalog_words, 0, len(tagalog_words), isWordToSearch) < 0:
+        if binary_search2(tagalog_words,isWordToSearch) < 0: #binary_search(tagalog_words, 0, len(tagalog_words), isWordToSearch) < 0:
             temp[key]['isDictionaryWord'] = False
         else:
             temp[key]['isDictionaryWord'] = True
@@ -115,6 +113,20 @@ def binary_search(arr, lower_bound, upper_bound, word):
             return binary_search(arr, mid + 1, upper_bound, word)
     else:
         return -1   
+
+def binary_search2(arr, x):
+    low = 0
+    high = len(arr) - 1
+    mid = 0
+    while low <= high:
+        mid = (high + low) // 2
+        if arr[mid] < x:
+            low = mid + 1
+        elif arr[mid] > x:
+            high = mid - 1
+        else:
+            return mid
+    return -1
 def remove_special_chars(word): 
     return re.sub(r'[^\w]','',word.lower())
 
