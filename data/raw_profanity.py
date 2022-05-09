@@ -54,6 +54,7 @@ raw_profanity = [
 "puta",
 "putangina",
 "putaragis",
+"qaqo",
 "ratbu",
 "shit",
 "shunga",
@@ -72,7 +73,6 @@ raw_profanity = [
 "tungaw",
 "ugok",
 "ulol",
-"ulupong",
 "ungas",
 "ungol"
 ]

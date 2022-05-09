@@ -137,7 +137,7 @@ def init_default_values(tokens):
 
 # print(string.punctuation)
 # print(word_leet_to_tagalog('pu7@n6!na'))
-# title = 'ang p 3 t s a  ng@yon ay pebrero ng bente-sais,  d@law@ng l!bo\'t bente dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
+# title = 'es and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
 # sample = 'puta qaqo yayamanin jakol hhhh mahal pakiskis pakita g@go'
 # tokens = whitespace_tokenizer(sample)
 # tokens = leet_checker(tokens)
