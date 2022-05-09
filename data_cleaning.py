@@ -81,7 +81,7 @@ def filter_the_dict(dictObj, callback):
 def stopwords_checker(tokens):
     temp=tokens
     for key in tokens:
-        if key in filipino_stopwords or len(key) < 2:
+        if key in filipino_stopwords or len(key) < 3:
             temp[key]['isStopword'] = True
         else:
             temp[key]['isStopword'] = False
