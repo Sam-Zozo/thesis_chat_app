@@ -61,7 +61,7 @@ raw_profanity = [
 "putaragis",
 "qaqo",
 "ratbu",
-"shit",
+"shet",
 "shunga",
 "siraulo",
 "suso",
