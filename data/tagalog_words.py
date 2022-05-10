@@ -5573,7 +5573,6 @@ tagalog_words=[
 "dimig",
 "dimisyon",
 "dimon",
-"dimonyo",
 "dimpol",
 "din",
 "dina",
