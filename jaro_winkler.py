@@ -105,7 +105,9 @@ if __name__ == '__main__':
     print(jaro_Winkler('tsitsarong', 'tigang'))
     print(jaro_Winkler('rt', 'ratbu'))
     print(jaro_Winkler('gago', 'ggaaggoo'))
-
+    print(jaro_Winkler('nitong', 'nognog'))
+    print(round(1.234, 2))
+    print(round(1.359, 2))
 
     # print(re.sub(r'[^\w]','','p-u-!!!!!!!!!!!-n-a-m-o'))
     # "p-u-t-a-n-g-i-n-a-m-o",'putanginamo'

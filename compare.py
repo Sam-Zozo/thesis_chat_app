@@ -11,19 +11,19 @@ def clean_text(string):
     string = to_lowercase(string)
     tokens = init_default_values(filipino_word_checker(stopwords_checker(leet_checker(whitespace_tokenizer(string)))))
     for key, value in tokens.items():
-        if value['isStopword'] == False and value['isDictionaryWord'] == False:
+        if value['isStopword'] == False and value['isDictionaryWord'] == False: #if not stopword AND not in dictionary
             if value['isLeet'] == True:
-                x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) >= 0.8]
+                x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) >= 0.75]
                 if x:
                     tokens[key]['isProfane']  = True
-                    # print(x)
+                    print(x)
                 else:
                     tokens[key]['isProfane']  = False
             else:
-                x = [x for x in raw_profanity if jaro_Winkler(key,x) >= 0.8]
+                x = [x for x in raw_profanity if jaro_Winkler(key,x) >= 0.75]
                 if x:
                     tokens[key]['isProfane']  = True
-                    # print(x)
+                    print(x)
                 else:
                     tokens[key]['isProfane']  = False
         else:
@@ -32,19 +32,19 @@ def clean_text(string):
 
 
 
-# if __name__ == "__main__":
-#     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-#     # sentence = 'ang mga puta ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
-#     sentence  = 'putanginamogagokatanginamo'
-#     start = time.time()    
-#     # sentence = 'puta ina mo olol'
-#     tokens = clean_text(sentence)
+if __name__ == "__main__":
+    # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
+    # sentence = 'ang mga puta ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    sentence  = 'putanginamogagokatanginamo nitong tado tato śhet 6@6() 8()80'
+    start = time.time()    
+    # sentence = 'puta ina mo olol'
+    tokens = clean_text(sentence)
     
-#     end = time.time()
-#     for key, value in tokens.items():
-#         print(key, value)
-#     print('time: ', end - start)
-#     for key, value in tokens.items():
-#         # if value['isProfane'] == True:
-#             print(key, value)
+    end = time.time()
+    for key, value in tokens.items():
+        print(key, value)
+    print('time: ', end - start)
+    for key, value in tokens.items():
+        # if value['isProfane'] == True:
+            print(key, value)
 

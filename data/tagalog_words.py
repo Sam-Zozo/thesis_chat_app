@@ -1944,7 +1944,6 @@ tagalog_words=[
 "bakid",
 "bakin",
 "bakit",
-"bakla",
 "baklad",
 "baklahin",
 "baklaran",
