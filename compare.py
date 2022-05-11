@@ -16,14 +16,14 @@ def clean_text(string):
                 x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) >= 0.75]
                 if x:
                     tokens[key]['isProfane']  = True
-                    print(x)
+                    # print(x)
                 else:
                     tokens[key]['isProfane']  = False
             else:
                 x = [x for x in raw_profanity if jaro_Winkler(key,x) >= 0.75]
                 if x:
                     tokens[key]['isProfane']  = True
-                    print(x)
+                    # print(x)
                 else:
                     tokens[key]['isProfane']  = False
         else:
