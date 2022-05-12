@@ -1,4 +1,7 @@
+from calendar import isleap
+from curses import has_key
 import re
+import time
 from tokenize import Special
 from data.filipino_stopwords import filipino_stopwords
 from data.tagalog_words import tagalog_words
@@ -6,8 +9,13 @@ from data.raw_profanity import raw_profanity
 # from data.tagalog_words2 import tagalog_words as t2
 from nltk import regexp_tokenize
 import nltk
-
+from stemmer import stemmer
 from jaro_winkler import jaro_Winkler
+
+VOWELS = "aeiouAEIOU"
+CONSONANTS = "bdghklmnngprstwyBDGHKLMNNGPRSTWY"
+NUMBERS = "1234567890"
+
 alt_chars = {
     'a':["à","4","@","^","ci","λ","∂","ae","ä","*"],
     'b':['8','⒝','13','൫','ß','|8','l8','18','ḃ','v'],
@@ -55,6 +63,8 @@ def leet_checker(tokens):
 
 def is_leet(word):
     c = 'wertyuiopasdghklvbnm'
+    if word.isnumeric():
+        return False
     for char in word:
         if not char in c:
             return True
@@ -82,25 +92,84 @@ def filter_the_dict(dictObj, callback):
             newDict[key] = value
     return newDict
 
-# marking stopwords
+# list -> check if leet -> if leet translate -> perform stemming -> tag stopwords -> tag tagalog words -> jaro
+def is_tagalog_characters(word):
+    tag_char = 'wertyuiopasdghklvbnm'
+    isAllTagChar = False
+    for i in word:
+        if i in tag_char:
+            isAllTagChar = True
+    return isAllTagChar
+
+def tagalog_stemmer(tokens):
+    ls = list()
+    temp = tokens
+    for key, value in tokens.items():
+        if not value['isLeet']:
+            ls.append(key)
+        else:
+            ls.append(value['originalWord'])
+    ls = stemmer('3', ls, '1')
+    # print("ls:",ls[0])
+    for key, value in tokens.items():
+        for dictionary in ls[0]:
+            if dictionary['word'] == key:
+                temp[key]['rootWord'] = dictionary['root']
+            elif value.get('originalWord') and dictionary['word'] == value['originalWord']:
+                    temp[key]['rootWord'] = dictionary['root']
+            # elif value.get('originalWord') and dictionary['word'] != value['originalWord']:
+            #     temp[key]['rootWord'] = value['originalWord']
+            # else:
+            #     temp[key]['rootWord'] = ''
+    return temp
+
 def stopwords_checker(tokens):
+
     temp=tokens
-    for key in tokens:
-        if key in filipino_stopwords or len(key) < 3:
+    # print("test",temp)
+    for key, value in tokens.items():
+        toSearch = key
+        # print('r = ',value['rootWord'])
+        if toSearch in filipino_stopwords or len(toSearch) < 3:
+            temp[key]['isStopword'] = True
+            continue
+        if value['rootWord'] and value['rootWord'] != key:
+            toSearch = value['rootWord']
+            
+        if toSearch in filipino_stopwords or len(toSearch) < 3:
             temp[key]['isStopword'] = True
         else:
             temp[key]['isStopword'] = False
     return temp
+def isAllVowels(word):
+    count = 0
+    for c in word:
+        if c in VOWELS:
+            count+=1
+    if count == len(word):
+        return True
+    else:
+        return False
 
 def filipino_word_checker(tokens):
     temp=tokens
+
     for key, value in tokens.items():
+        isWordToSearch = key
+        if isAllVowels(key):
+            temp[key]['isStopword'] = True
+            continue
         if value['isStopword']:
             temp[key]['isDictionaryWord'] = True
             continue
-        isWordToSearch = key
-        if value['isLeet']:
-            isWordToSearch = value['originalWord']
+        if binary_search2(tagalog_words,isWordToSearch) > 0: #binary_search(tagalog_words, 0, len(tagalog_words), isWordToSearch) < 0:
+            temp[key]['isDictionaryWord'] = True
+            continue
+        
+        # if value['isLeet'] and value['rootWord']:
+        #     isWordToSearch = value['originalWord']
+        # if not value['isLeet'] and value['rootWord'] != key:
+        isWordToSearch = value['rootWord']
         if binary_search2(tagalog_words,isWordToSearch) < 0: #binary_search(tagalog_words, 0, len(tagalog_words), isWordToSearch) < 0:
             temp[key]['isDictionaryWord'] = False
         else:
@@ -132,14 +201,69 @@ def binary_search2(arr, x):
         else:
             return mid
     return -1
-def remove_special_chars(word): 
-    return re.sub(r'[^\w]','',word.lower())
 
 def init_default_values(tokens):
-    for key, value in tokens.items():
+    for key in tokens.keys():
+        # tokens[key]['isLeet'] = False
+        # tokens[key]['originalWord'] = ''
+        # tokens[key]['isStopword'] = False
+        # tokens[key]['isDictionaryWord'] = False
+        # tokens[key]['rootWord'] = ''
         tokens[key]['isProfane'] = False
+
     return tokens
 
+def clean_text(string):
+    threshold = 0.8
+    string = to_lowercase(string)
+    tokens = init_default_values(filipino_word_checker(stopwords_checker(tagalog_stemmer(leet_checker(whitespace_tokenizer(string))))))
+    # tokens = init_default_values(filipino_word_checker(stopwords_checker(leet_checker(whitespace_tokenizer(string)))))
+    for key, value in tokens.items():
+        if value['isStopword'] == False and value['isDictionaryWord'] == False: #if not stopword AND not in dictionary
+            x = [x for x in raw_profanity if jaro_Winkler(value['rootWord'],x) >= threshold]
+            if x:
+                tokens[key]['isProfane']  = True
+                print(x)
+            else:
+                tokens[key]['isProfane']  = False
+            # if value['isLeet'] == True:
+            #     x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) >= threshold]
+            #     if x:
+            #         tokens[key]['isProfane']  = True
+            #         print(x)
+            #     else:
+            #         tokens[key]['isProfane']  = False
+            # else:
+            #     x = [x for x in raw_profanity if jaro_Winkler(key,x) >= threshold]
+            #     if x:
+            #         tokens[key]['isProfane']  = True
+            #         print(x)
+            #     else:
+            #         tokens[key]['isProfane']  = False
+        else:
+            continue
+    return tokens
+
+if __name__ == "__main__":
+    # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
+    sentence = 'maganda kabado gumagawa kwento pinapabayaan unang tulungan kilalanin pagbabago ibang'# bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    # sentence = "Maka hugot ka, ha. Lagot ka kay Mar Roxas. ?? https://t.co/U29f1MDqv2"
+    
+    #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
+    start = time.time()    
+    # sentence = 'puta ina mo olol'
+    tokens = clean_text(sentence)
+    
+    end = time.time()
+    # for key, value in tokens.items():
+    #     print(key, value)
+    print('time: ', end - start)
+    for key, value in tokens.items():
+        # if value['isProfane'] == True:
+            print(key, value)
+
+# aeiou aaaaa oo aoie 
+# print('817'.isnumeric())
 # print(string.punctuation)
 # print(word_leet_to_tagalog('pu7@n6!na'))
 # title = 'es and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'

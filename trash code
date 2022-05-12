@@ -1,5 +1,7 @@
 
 
+# def remove_special_chars(word): 
+#     return re.sub(r'[^\w]','',word.lower())
 
 # [
 #         "4mPut4 b!L4T b!N1br()kh@ bObO 806o bo70 Br0cha BurAt 8\/\/1SI7 d3m()nY() 3ng0T g46() ]-[4yOP HinaYUp4c ]-[Udas 1n!Y0T |nUtil iYO7 jac()L CaG4guH4n k4n70T K4NtUt4|\| c4ululAn cYke c!k!Ng1n@mO cYgnGY|\|A kUPAl l3c]-[3 l1NTik gnaK4cAbura7 0LoK paKYnG5h3T Pakzh37 p4cyU P0Cp0C pUCha PuChA]\[G64la pUchAgnGIna puC3 PUkin4gnG|n4 puNY3ta PUTa puTangiNA pUt4ragiZ raT8U SHUnGa s1R4ul() 5U50 T43 ta3]\[4 t4m0|) 74gnG4 t4nGiN4 t4R46|z taR4n7@|)o 7!]\/[@ng 7|t3 7uNGaw Ug()K ulOL unG4s ugn60L",

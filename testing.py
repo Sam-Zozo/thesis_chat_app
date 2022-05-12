@@ -1,7 +1,7 @@
 
 from enum import unique
 import pandas as pd
-from compare import clean_text
+from data_cleaning import clean_text
 import re
 
 raw_data = pd.read_csv('dataV2.csv')
@@ -21,10 +21,16 @@ raw_data = pd.read_csv('dataV2.csv')
 def testing(string):
     profane_ctr = 0
     non_profane_ctr = 0
+    # if string is None:
+    #     return None
     x = clean_text(string)
-    for value in x.values():
+    for key, value in x.items():
         if value['isProfane']:
             profane_ctr+=1
+            
+            with open('test_result.txt','a') as f:
+                f.write('\n')
+                f.write(key)
         else:
             non_profane_ctr+=1
     
@@ -42,7 +48,15 @@ non_profane_ctr = 0
 profane_sentence = 0
 non_profane_sentence = 0
 total_sentence = 0
+ctr =0
+try:
+    text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ", 'tite'.split()))
+    print(text)
 
+except TypeError:
+    print('nani')
+# testing(text)  
+print('nasdasds')    
 for column_name, column_value in raw_data.iterrows():
     # print(column_name,column_value)
     # ctr = unique(column_value["label2"])
@@ -50,7 +64,8 @@ for column_name, column_value in raw_data.iterrows():
 
     
     # if column_value["label2"] == 2 or column_value["label2"] == 3:
-    #     text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ",column_value["fin_eng_trans"]).split())
+    #     text = column_value["fin_eng_trans"]
+    #     # text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ",column_value["fin_eng_trans"]).split())
     #     res = testing(text)
     #     profane_ctr+=res['profane words']
     #     non_profane_ctr+= res['non-profane words']
@@ -60,10 +75,29 @@ for column_name, column_value in raw_data.iterrows():
     #     else:
     #         non_profane_sentence+=1
            
-    # if column_value["label2"] == 0 or column_value["label2"] == 1:
-    #   if column_value["label2"] == 1 :
-    #     # text = re.sub(r'^https?:\/\/.*[\r\n]*', '', column_value["fin_eng_trans"], flags=re.MULTILINE)
-    #     text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ",column_value["text"]).split())
+    if column_value["label2"] == 0 or column_value["label2"] == 1:
+        # text = re.sub(r'^https?:\/\/.*[\r\n]*', '', column_value["fin_eng_trans"], flags=re.MULTILINE)
+        ctr+=1
+        
+        try:
+            text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ",column_value["text"]).split())
+           
+        except TypeError:
+            continue
+        # print(text)
+        res = testing(text)
+        
+        profane_ctr+=res['profane words']
+        non_profane_ctr+= res['non-profane words']
+        total_ctr = profane_ctr + non_profane_ctr
+        if res['profane_sentence']:
+            profane_sentence+=1 
+        else:
+            non_profane_sentence+=1
+        
+
+    # if column_value["label2"] == 4:
+    #     text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ",column_value["init_eng_trans"]).split())
     #     res = testing(text)
     #     profane_ctr+=res['profane words']
     #     non_profane_ctr+= res['non-profane words']
@@ -72,17 +106,6 @@ for column_name, column_value in raw_data.iterrows():
     #         profane_sentence+=1 
     #     else:
     #         non_profane_sentence+=1
-    if column_value["label2"] == 4:
-
-        text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)"," ",column_value["init_eng_trans"]).split())
-        res = testing(text)
-        profane_ctr+=res['profane words']
-        non_profane_ctr+= res['non-profane words']
-        total_ctr = profane_ctr + non_profane_ctr
-        if res['profane_sentence']:
-            profane_sentence+=1 
-        else:
-            non_profane_sentence+=1
 
 total_sentence += profane_sentence + non_profane_sentence 
 print("Profane Words: ", profane_ctr)

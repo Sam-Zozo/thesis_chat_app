@@ -11485,6 +11485,7 @@ tagalog_words=[
 "kababawan",
 "kababayan",
 "kababuyan",
+"kabado",
 "kabag",
 "kabag-kabag",
 "kabagabagan",

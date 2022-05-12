@@ -1,0 +1,7 @@
+{'word': 'niyong', 'root': 'niyo', 'prefix': [], 'infix': [], 'suffix': ['ng'], 'repeat': [], 'dupli': [], 'clean': []}
+{'word': 'nyong', 'root': 'nyong', 'prefix': [], 'infix': [], 'suffix': [], 'repeat': [], 'dupli': [], 'clean': []}
+{'word': 'bilang!', 'root': 'bilang', 'prefix': [], 'infix': [], 'suffix': [], 'repeat': [], 'dupli': [], 'clean': ['!']}
+{'word': 'in?yong?', 'root': 'in?yo', 'prefix': [], 'infix': [], 'suffix': ['ng'], 'repeat': [], 'dupli': [], 'clean': ['?']}
+{'word': 'nitong', 'root': 'nito', 'prefix': [], 'infix': [], 'suffix': ['ng'], 'repeat': [], 'dupli': [], 'clean': []}
+{'word': 'tayong', 'root': 'tayo', 'prefix': [], 'infix': [], 'suffix': ['ng'], 'repeat': [], 'dupli': [], 'clean': []}
+{'word': 'kagastusan.', 'root': 'gastos', 'prefix': ['ka'], 'infix': [], 'suffix': ['an'], 'repeat': [], 'dupli': [], 'clean': ['.', 'u']}

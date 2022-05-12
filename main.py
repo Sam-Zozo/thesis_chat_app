@@ -1,8 +1,7 @@
 from datetime import timedelta
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_socketio import SocketIO
-import compare
-import data_cleaning
+from data_cleaning import  *
 import time
 import nltk
 
@@ -19,7 +18,7 @@ def index():
 def sample():
     return render_template('sample2.html')
 
-@app.route('/session', methods=['GET','POST'])
+@app.route('/chat', methods=['GET','POST'])
 def sessions():
     if(request.method == 'POST'):
         session['user'] = request.form['username']
@@ -37,7 +36,7 @@ def handle_my_custom_event(json, methods=['GET', 'POST']):
 
     # print('received my event: ' + str(json))
     start = time.time()   
-    tokens = compare.clean_text(json['message'])
+    tokens = clean_text(json['message'])
     print("Tokens: ",tokens)
     white_space_tokenizer = nltk.WhitespaceTokenizer()
     

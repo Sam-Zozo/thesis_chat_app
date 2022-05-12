@@ -105,6 +105,8 @@ if __name__ == '__main__':
     print(jaro_Winkler('tsitsarong', 'tigang'))
     print(jaro_Winkler('rt', 'ratbu'))
     print(jaro_Winkler('gago', 'ggaaggoo'))
+
+    print(jaro_Winkler('makitang', 'kantutan'))
     print(jaro_Winkler('nitong', 'nognog'))
     print(round(1.234, 2))
     print(round(1.359, 2))
