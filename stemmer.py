@@ -4,7 +4,7 @@ import sys
 	CONSTANTS 
 """
 VOWELS = "aeiouAEIOU"
-CONSONANTS = "bdghklmnngprstwyBDGHKLMNNGPRSTWY"
+CONSONANTS = "bdfghjklmnpqrstvwxyzBDFGHJKLMNPQRSTVWXYZ"
 
 """ 
 	Affixes
@@ -429,8 +429,8 @@ def clean_stemmed(token, CLEANERS, REPITITION):
 
 	CC_EXP = ['gl', 'gr', 'ng', 'kr', 'kl', 'kw', 'ts', 'tr', 'pr', 'sw', 'sy'] # Consonant + Consonant Exceptions
 
-	if token[-1] == '.' and PASS_FLAG == False:
-		PERIOD_FLAG = True
+	# if token[-1] == '.' and PASS_FLAG == False:
+	# 	PERIOD_FLAG = True
 
 	if not check_vowel(token[-1]) and not check_consonant(token[-1]):
 		CLEANERS.append(token[-1])
@@ -584,7 +584,8 @@ if __name__ == "__main__":
 	# stemmer(mode, source, info_dis)
 	#s =  'bibilogan bibilugan Animasyong animasyong bibilogan bibilogan bibilugan purong larong balitang balitaan solusyonan babalikan babawasan babayaran'#sila sa paghahanap ng posibleng gamot sa malubhang sakit ng dinaramdam ng kanyang ina.'
 	s = 'niyong nyong bilang! in?yong? nitong tayong kagastusan.'#kagastos nakakasikat napakasakit nakakaantok'
-	s2 = 'Maka hugot ka, ha. Lagot ka kay Mar Roxas. ?? https://t.co/U29f1MDqv2'
+	s2 = 'Maka hugot katangahan magaling nakakabaliw napakagaling napaka-gastos napakagastos ka, ha. Lagot ka kay Mar Roxas. ?? https://t.co/U29f1MDqv2'
+	# s2 = s2.split(' ')
 	print(stemmer('2', s2, '1'))
 
 """

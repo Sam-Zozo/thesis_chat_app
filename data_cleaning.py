@@ -1,6 +1,3 @@
-from calendar import isleap
-from curses import has_key
-import re
 import time
 from tokenize import Special
 from data.filipino_stopwords import filipino_stopwords
@@ -28,9 +25,9 @@ alt_chars = {
     'j':['dy','ĵ','Ĵ','ǰ','ɉ','Ɉ'],
     'k':['q','|<','|x','|{','/<','\\<','/x','\\x','ɮ','c'],
     'l':['ł','1','|','1_','l_','lJ','£','¬','el'],
-    'm':['ḿ','ṁ','em','ṃ','m̀','ᵯ','nn','//\\\\//\\\\','/|\\','/|/|','.\\\\','/^^\\','/V\\','|^^|'],
-    'n':['ñ','ń','ņ','ɲ','ŋ','ṅ','<\\>','{\\}','//','[]\\[]',']\\[','~','₪','/|/','in'],
-    'o':['ô','ö','ò','ó','œ','ø','ō','õ','0','()','oh','[]','¤','Ω','ω','*','[[]]','oh'],
+    'm':['ḿ','ṁ','ṃ','m̀','ᵯ'],
+    'n':['ñ','ń','ņ','ɲ','ŋ','ṅ','~','₪'],
+    'o':['ô','ö','ò','ó','œ','ø','ō','õ','0','¤','Ω','ω','*'],
     'p':['|o','lo','1o','f','|>','|7','l7','17','q','|d','ld','1d','℗','|º','1º','lº','þ','¶'],
     'r':['|2','l2','12','2','/2','I2','|^','l^','1^','|~','l~','1~','lz','[z','|`','l`','1`','.-','®','Я','ʁ','|?','l?','1?','arr'],
     's':['5','ß','ś','$','z','es','ʃ','§','š'],
@@ -102,21 +99,23 @@ def is_tagalog_characters(word):
     return isAllTagChar
 
 def tagalog_stemmer(tokens):
-    ls = list()
+    l = list()
     temp = tokens
-    for key, value in tokens.items():
+    for key, value in temp.items():
         if not value['isLeet']:
-            ls.append(key)
+            l.append(key)
         else:
-            ls.append(value['originalWord'])
-    ls = stemmer('3', ls, '1')
-    # print("ls:",ls[0])
+            l.append(value['originalWord'])
+    # print(l)
+    ls = stemmer('3', l, '1')
+    # print("ls:",ls[1])
     for key, value in tokens.items():
         for dictionary in ls[0]:
-            if dictionary['word'] == key:
+            
+            if dictionary['word'] == key: #nakapa typo?
                 temp[key]['rootWord'] = dictionary['root']
             elif value.get('originalWord') and dictionary['word'] == value['originalWord']:
-                    temp[key]['rootWord'] = dictionary['root']
+                temp[key]['rootWord'] = dictionary['root']
             # elif value.get('originalWord') and dictionary['word'] != value['originalWord']:
             #     temp[key]['rootWord'] = value['originalWord']
             # else:
@@ -130,13 +129,12 @@ def stopwords_checker(tokens):
     for key, value in tokens.items():
         toSearch = key
         # print('r = ',value['rootWord'])
-        if toSearch in filipino_stopwords or len(toSearch) < 3:
+        if toSearch in filipino_stopwords or len(toSearch) <= 3:
             temp[key]['isStopword'] = True
             continue
         if value['rootWord'] and value['rootWord'] != key:
             toSearch = value['rootWord']
-            
-        if toSearch in filipino_stopwords or len(toSearch) < 3:
+        if toSearch in filipino_stopwords or len(toSearch) <= 3:
             temp[key]['isStopword'] = True
         else:
             temp[key]['isStopword'] = False
@@ -162,15 +160,14 @@ def filipino_word_checker(tokens):
         if value['isStopword']:
             temp[key]['isDictionaryWord'] = True
             continue
-        if binary_search2(tagalog_words,isWordToSearch) > 0: #binary_search(tagalog_words, 0, len(tagalog_words), isWordToSearch) < 0:
+        if binary_search2(tagalog_words,isWordToSearch) > 0: 
             temp[key]['isDictionaryWord'] = True
             continue
-        
-        # if value['isLeet'] and value['rootWord']:
-        #     isWordToSearch = value['originalWord']
-        # if not value['isLeet'] and value['rootWord'] != key:
+        # if value.get('orignalWord') and (binary_search2(tagalog_words,value.get('orignalWord')) )> 0: 
+        #     temp[key]['isDictionaryWord'] = True
+        #     continue
         isWordToSearch = value['rootWord']
-        if binary_search2(tagalog_words,isWordToSearch) < 0: #binary_search(tagalog_words, 0, len(tagalog_words), isWordToSearch) < 0:
+        if binary_search2(tagalog_words,isWordToSearch) < 0: 
             temp[key]['isDictionaryWord'] = False
         else:
             temp[key]['isDictionaryWord'] = True
@@ -246,8 +243,9 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = 'maganda kabado gumagawa kwento pinapabayaan unang tulungan kilalanin pagbabago ibang'# bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    sentence = 'aking bagong. p.. nakakabaliw.. maglaba mag-aliw nakakabaliw. magaling? napakagaling! napakagastos@ kagalingan kagaguhan kahayupan kagastusan katangahan ttttaannggiiinnaa ppppppuuuttaaa '# bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
     # sentence = "Maka hugot ka, ha. Lagot ka kay Mar Roxas. ?? https://t.co/U29f1MDqv2"
+    # stopwords = ' '.join(filipino_stopwords)
     
     #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
     start = time.time()    
