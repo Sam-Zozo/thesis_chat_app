@@ -167,10 +167,10 @@ def filipino_word_checker(tokens):
         #     temp[key]['isDictionaryWord'] = True
         #     continue
         isWordToSearch = value['rootWord']
-        if binary_search2(tagalog_words,isWordToSearch) < 0: 
-            temp[key]['isDictionaryWord'] = False
-        else:
+        if binary_search2(tagalog_words,isWordToSearch) > 0: 
             temp[key]['isDictionaryWord'] = True
+        else:
+            temp[key]['isDictionaryWord'] = False
     return temp
 
 def binary_search(arr, lower_bound, upper_bound, word):
@@ -227,7 +227,7 @@ def clean_text(string):
             #     x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) >= threshold]
             #     if x:
             #         tokens[key]['isProfane']  = True
-            #         print(x)
+               # print(x)
             #     else:
             #         tokens[key]['isProfane']  = False
             # else:
@@ -243,7 +243,7 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = 'aking bagong. p.. kamusta???  magaling? napakagaling!  '# bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    sentence = 'kamusta???  mag@ling magaling! magaling* magaling magaling? napakagaling!  '# bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
     # sentence = "Maka hugot ka, ha. Lagot ka kay Mar Roxas. ?? https://t.co/U29f1MDqv2"
     # stopwords = ' '.join(filipino_stopwords)
     

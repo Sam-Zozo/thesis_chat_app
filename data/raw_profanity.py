@@ -1,8 +1,5 @@
 raw_profanity = [
-"agnat", 
 "amputa",
-"anignatup",
-"anignik",
 "bading",
 "bakla",
 "bayag",
@@ -40,7 +37,6 @@ raw_profanity = [
 "leche",
 "lintik",
 "nognog",
-"odatnarat",
 "olok",
 "pakingshet",
 "pakshet",
