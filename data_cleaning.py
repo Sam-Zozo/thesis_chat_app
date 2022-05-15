@@ -59,7 +59,7 @@ def leet_checker(tokens):
     return temp
 
 def is_leet(word):
-    c = 'wertyuiopasdghklvbnm'
+    c = 'wertyuiopasdghklbnm'
     if word.isnumeric():
         return False
     for char in word:
@@ -91,7 +91,7 @@ def filter_the_dict(dictObj, callback):
 
 # list -> check if leet -> if leet translate -> perform stemming -> tag stopwords -> tag tagalog words -> jaro
 def is_tagalog_characters(word):
-    tag_char = 'wertyuiopasdghklvbnm'
+    tag_char = 'wertyuiopasdghklbnm'
     isAllTagChar = False
     for i in word:
         if i in tag_char:
@@ -243,8 +243,8 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = 'kamusta??? potttta mag@ling magaling! magaling* magaling magaling? napakagaling!  '# bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
-    # sentence = "Maka hugot ka, ha. Lagot ka kay Mar Roxas. ?? https://t.co/U29f1MDqv2"
+    sentence = 'kabobohan napakabobo vovo kamangmanghan kamalian kaunlaran' # bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    # sentence = "putangina edi gawin mong manok gago ampota"
     # stopwords = ' '.join(filipino_stopwords)
     
     #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
@@ -256,6 +256,8 @@ if __name__ == "__main__":
     # for key, value in tokens.items():
     #     print(key, value)
     print('time: ', end - start)
+
+    print(sentence)
     for key, value in tokens.items():
         # if value['isProfane'] == True:
             print(key, value)

@@ -82,7 +82,8 @@ raw_profanity = [
 "ulol",
 "ungas",
 "ungol",
-"utin"
+"utin",
+"mangmang"
 ]
 # raw_profanity = [
 # "amputa",
