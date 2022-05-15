@@ -14,33 +14,34 @@ CONSONANTS = "bdghklmnngprstwyBDGHKLMNNGPRSTWY"
 NUMBERS = "1234567890"
 
 alt_chars = {
-    'a':["à","4","@","^","ci","λ","∂","ae","ä","*"],
-    'b':['8','⒝','13','൫','ß','|8','l8','18','ḃ','v'],
-    'd':['ḋ','ď','Ḋ','|)','])','cl','Ð','∂','ð','[)'],
-    'e':['3','&','é','€','ii','ə','£','iii','*','ɇ'],
-    'f':['ƒ',']=','}','(=','[=','ph','Ƒ','ḟ','Ḟ','ⓕ'],   
-    'g':['6','9','q','(_-','ĝ','ǧ','ḡ','ģ','ǥ','ɠ'],
-    'h':['|-|','#',']-[',')-(','}{','}-{','ḣ','ĥ','ȟ','ħ'], 
-    'i':['!','1','|','*','‡'],
+    'a':["à","4","@","^",'á',"λ","∂","ae","ä","*"],
+    'b':['8','⒝','൫','ß','ḃ','v'],
+    'd':['ḋ','ď','Ḋ','ḏ','ḓ','cl','Ð','∂','ð','ɗ'],
+    'e':['3','&','é','€','ii','ə','£','*','ɇ'],
+    'f':['ƒ','}','f','Ƒ','ḟ','Ḟ','ⓕ'],   
+    'g':['6','9','q','ĝ','ǧ','ḡ','ģ','ǥ','ɠ'],
+    'h':['卄','#','ḥ','ḫ','ⱨ','ḣ','ĥ','ȟ','ħ'], 
+    'i':['!','1','|','*','‡','𝓲','/'],
     'j':['dy','ĵ','Ĵ','ǰ','ɉ','Ɉ'],
-    'k':['q','|<','|x','|{','/<','\\<','/x','\\x','ɮ','c'],
-    'l':['ł','1','|','1_','l_','lJ','£','¬','el'],
+    'k':['q','ɮ','c'],
+    'l':['ł','1','|','£','¬'],
     'm':['ḿ','ṁ','ṃ','m̀','ᵯ'],
     'n':['ñ','ń','ņ','ɲ','ŋ','ṅ','~','₪'],
     'o':['ô','ö','ò','ó','œ','ø','ō','õ','0','¤','Ω','ω','*'],
-    'p':['|o','lo','1o','f','|>','|7','l7','17','q','|d','ld','1d','℗','|º','1º','lº','þ','¶'],
-    'r':['|2','l2','12','2','/2','I2','|^','l^','1^','|~','l~','1~','lz','[z','|`','l`','1`','.-','®','Я','ʁ','|?','l?','1?','arr'],
+    'p':['f','q','₱','℗','þ','¶'],
+    'r':['2','®','Я','ʁ'],
     's':['5','ß','ś','$','z','es','ʃ','§','š'],
-    't':['7','ł','+','-|-','-l-','-1-','1','†'],
-    'u':['v','l_l','1_1','(_)','[_]','{_}','y3w','\\_/','\\_\\','/_/','v','yew','yoo','yuu'],
+    't':['7','ł','+','丅''1','†'],
+    'u':['v','û','ù','ū','ú','ü'],
     'v':['ʌ','\/','√','l/','|/'],
-    'w':['\\/\\/','vv','\\^/','\\x/','\\|/','\\_|_/','\\//\\//','\\_:_/','Ш','ɰ'],
+    'w':['Ш','ɰ'],
     'y':['ỷ','`/','Ψ','φ','λ','Ч','¥','ÿ'],
+
 }
 
 def whitespace_tokenizer(string):
-    white_space_tokenizer = nltk.WhitespaceTokenizer()
-    return dict.fromkeys(white_space_tokenizer.tokenize(string), {})
+    white_space_tokenizer = string.split(' ')
+    return dict.fromkeys(white_space_tokenizer)
 
 def to_lowercase(string):
     return string.lower()
@@ -243,7 +244,7 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = 'kabobohan napakabobo vovo kamangmanghan kamalian kaunlaran' # bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    sentence = 'ka. .bobohan. .napakabobo. .vovo. .kamangmangan. kamalian kaunlaran' # bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
     # sentence = "putangina edi gawin mong manok gago ampota"
     # stopwords = ' '.join(filipino_stopwords)
     
