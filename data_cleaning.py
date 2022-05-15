@@ -243,7 +243,7 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = 'aking bagong. p.. nakakabaliw.. maglaba mag-aliw nakakabaliw. magaling? napakagaling! napakagastos@ kagalingan kagaguhan kahayupan kagastusan katangahan ttttaannggiiinnaa ppppppuuuttaaa '# bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    sentence = 'aking bagong. p.. kamusta? nakakabaliw.. maglaba mag-aliw nakakabaliw. magaling? napakagaling! napakagastos@ kagalingan kagaguhan kahayupan kagastusan katangahan ttttaannggiiinnaa ppppppuuuttaaa '# bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
     # sentence = "Maka hugot ka, ha. Lagot ka kay Mar Roxas. ?? https://t.co/U29f1MDqv2"
     # stopwords = ' '.join(filipino_stopwords)
     

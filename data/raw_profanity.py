@@ -30,6 +30,7 @@ raw_profanity = [
 "jakol",
 "kantot",
 "kantutan",
+"kepyas",
 "kaululan",
 "kike",
 "kikinginamo",
@@ -75,7 +76,8 @@ raw_profanity = [
 "ugok",
 "ulol",
 "ungas",
-"ungol"
+"ungol",
+"utin"
 ]
 # raw_profanity = [
 # "amputa",
