@@ -534,6 +534,7 @@ tagalog_words=[
 "alimuwang",
 "alimwang",
 "alin",
+"aling",
 "alin man",
 "alinagnag",
 "alindog",

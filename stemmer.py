@@ -62,9 +62,6 @@ def stemmer(mode, source, info_dis):
 		returns LIST
 	"""
 
-	# print("TAGALOG WORDS STEMMER....")
-	# print("[1 FileName] [2 RawString] [3 ShowInfo]")
-
 	global PERIOD_FLAG
 	global PASS_FLAG
 
