@@ -30,7 +30,7 @@ alt_chars = {
     'o':['ô','ö','ò','ó','œ','ø','ō','õ','0','¤','Ω','ω','*'],
     'p':['f','q','₱','℗','þ','¶'],
     'r':['2','®','Я','ʁ'],
-    's':['5','ß','ś','$','z','es','ʃ','§','š'],
+    's':['5','ß','ś','Ş','$','z','es','ʃ','§','š'],
     't':['7','ł','+','丅''1','†'],
     'u':['v','û','ù','ū','ú','ü'],
     'v':['ʌ','\/','√','l/','|/'],
@@ -244,7 +244,7 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = 'ka. .bobohan. .napakabobo. .vovo. .kamangmangan. kamalian kaunlaran' # bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    sentence = 'bobohan pakyu kaululan gaggggaaaa' # bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
     # sentence = "putangina edi gawin mong manok gago ampota"
     # stopwords = ' '.join(filipino_stopwords)
     
