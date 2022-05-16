@@ -428,7 +428,7 @@ def clean_stemmed(token, CLEANERS, REPITITION):
 
 	# if token[-1] == '.' and PASS_FLAG == False:
 	# 	PERIOD_FLAG = True
-
+	
 	if not check_vowel(token[-1]) and not check_consonant(token[-1]):
 		CLEANERS.append(token[-1])
 		token = token[0:-1]

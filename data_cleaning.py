@@ -1,3 +1,4 @@
+import re
 import time
 from tokenize import Special
 from data.filipino_stopwords import filipino_stopwords
@@ -8,6 +9,7 @@ from nltk import regexp_tokenize
 import nltk
 from stemmer import stemmer
 from jaro_winkler import jaro_Winkler
+from nltk.tokenize import WhitespaceTokenizer
 
 VOWELS = "aeiouAEIOU"
 CONSONANTS = "bdghklmnngprstwyBDGHKLMNNGPRSTWY"
@@ -40,8 +42,9 @@ alt_chars = {
 }
 
 def whitespace_tokenizer(string):
-    white_space_tokenizer = string.split(' ')
-    return dict.fromkeys(white_space_tokenizer)
+    # white_space_tokenizer = string.split(' ')
+    tk = WhitespaceTokenizer()
+    return dict.fromkeys(tk.tokenize(string))
 
 def to_lowercase(string):
     return string.lower()
@@ -79,6 +82,8 @@ def word_leet_to_tagalog(word):
         if char_leet_equivalent_dict: # if not empty
             key = [k for k,v in char_leet_equivalent_dict.items() if char in v]
             bWord = bWord.replace(char,key[0])
+
+    bWord = re.sub('[.,?\'\":{}=-_<>]', '', bWord)
     return bWord
 
 def filter_the_dict(dictObj, callback):
@@ -103,6 +108,8 @@ def tagalog_stemmer(tokens):
     l = list()
     temp = tokens
     for key, value in temp.items():
+        if len(key)<=3:
+            continue
         if not value['isLeet']:
             l.append(key)
         else:
@@ -112,15 +119,10 @@ def tagalog_stemmer(tokens):
     # print("ls:",ls[1])
     for key, value in tokens.items():
         for dictionary in ls[0]:
-            
             if dictionary['word'] == key: #nakapa typo?
                 temp[key]['rootWord'] = dictionary['root']
             elif value.get('originalWord') and dictionary['word'] == value['originalWord']:
                 temp[key]['rootWord'] = dictionary['root']
-            # elif value.get('originalWord') and dictionary['word'] != value['originalWord']:
-            #     temp[key]['rootWord'] = value['originalWord']
-            # else:
-            #     temp[key]['rootWord'] = ''
     return temp
 
 def stopwords_checker(tokens):
@@ -202,13 +204,7 @@ def binary_search2(arr, x):
 
 def init_default_values(tokens):
     for key in tokens.keys():
-        # tokens[key]['isLeet'] = False
-        # tokens[key]['originalWord'] = ''
-        # tokens[key]['isStopword'] = False
-        # tokens[key]['isDictionaryWord'] = False
-        # tokens[key]['rootWord'] = ''
         tokens[key]['isProfane'] = False
-
     return tokens
 
 def clean_text(string):
@@ -224,28 +220,14 @@ def clean_text(string):
                 print(x)
             else:
                 tokens[key]['isProfane']  = False
-            # if value['isLeet'] == True:
-            #     x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) >= threshold]
-            #     if x:
-            #         tokens[key]['isProfane']  = True
-               # print(x)
-            #     else:
-            #         tokens[key]['isProfane']  = False
-            # else:
-            #     x = [x for x in raw_profanity if jaro_Winkler(key,x) >= threshold]
-            #     if x:
-            #         tokens[key]['isProfane']  = True
-            #         print(x)
-            #     else:
-            #         tokens[key]['isProfane']  = False
         else:
             continue
     return tokens
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = 'bobohan pakyu kaululan gaggggaaaa' # bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
-    # sentence = "putangina edi gawin mong manok gago ampota"
+    # sentence = 'bobohan bobotante kabobohan .bo.bo pakyu kaululan gaggggaaaa' # bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
+    sentence = " Kahit bobong kabuwisitan anong? .paninira. g.a.g.o kabob.,ohan nyo kay Digong solid prin kame"
     # stopwords = ' '.join(filipino_stopwords)
     
     #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
@@ -262,7 +244,8 @@ if __name__ == "__main__":
     for key, value in tokens.items():
         # if value['isProfane'] == True:
             print(key, value)
-
+    # bWord = re.sub('[.,?\'\"]', '', 'bWord"')
+    # print(bWord)
 # aeiou aaaaa oo aoie 
 # print('817'.isnumeric())
 # print(string.punctuation)

@@ -6878,6 +6878,7 @@ tagalog_words=[
 "galaw ng daigdig",
 "galaw ng mga paa",
 "galaw-kusog",
+"galawa",
 "galawad",
 "galawgaw",
 "galawgawin",
