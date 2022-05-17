@@ -13,15 +13,15 @@ from nltk.tokenize import WhitespaceTokenizer
 import unicodedata
 
 alt_chars = {
-    'a':['à', '4', 'ᴀ', '@', '^', 'á', 'λ', '∂', 'ae', 'ä', '*'],
+    'a':['à', '4', 'ᴀ', '@', '^', 'á', 'λ', '∂', 'æ', 'ä', '*'],
     'b':['8', '⒝', '൫', 'ß', 'ḃ', 'v'],
     'd':['ḋ', 'ď', 'ḋ', 'ḏ', 'ḓ', 'cl', 'ð', '∂', 'ð', 'ɗ', 'ḋ', 'ð'],
     'e':['3', '&', 'é', '€', 'ii', 'ə', '£', '*', 'ɇ'],
     'f':['ƒ', '}', 'f', 'ƒ', 'ḟ', 'ḟ', 'ⓕ'],   
     'g':['6', '9', 'q','ɢ', 'ĝ', 'ǧ', 'ḡ', 'ģ', 'ǥ', 'ɠ'],
     'h':['卄', '#', 'ḥ', 'ḫ', 'ⱨ', 'ḣ', 'ĥ', 'ȟ', 'ħ'], 
-    'i':['!', '1','ɪ', '|', '*', '‡', '𝓲', '/'],
-    'j':['dy', 'ĵ', 'ĵ', 'ǰ', 'ɉ', 'ɉ'],
+    'i':['!', '1','ɪ', '|', '*', '‡', '𝓲', '/','\\'],
+    'j':['dy', 'ĵ', 'ĵ', 'ǰ', 'ɉ', 'ɉ', ';'],
     'k':['q', 'ɮ', 'c'],
     'l':['ł', '1', '|', '£', '¬'],
     'm':['ḿ', 'ṁ', 'ṃ', 'm̀', 'ᵯ'],
@@ -60,22 +60,23 @@ def leet_checker(tokens):
 
 def is_leet(word):
     c = 'wertyuiopasdghklbnm'
-    ctr = 0
+    # ctr = 0
     if word.isnumeric():
         return False
     for char in word:
         if not char in c:
-            ctr +=1
-            if ctr >= 2: 
-
-                return True
+            # ctr +=1
+            # if ctr >= 2: 
+            return True
     return False
 
 # character level translation of leet to tagalog
 def word_leet_to_tagalog(word):
-    
-    bWord = re.sub('[.,?\'\":{}=-_<>]', '', word)
-    # bWord=word
+    print(word)
+    # x = ['-','.','<','>',',','?','}',']','[','{','=','_','"',':']
+    word = re.sub('[-.<>,?}\]\[{=_\'\":]', '', word) #g@g0!! -> g@g0!! .,?\'\":}{=-_<> '[-.<>,?}][{=_\'\":]'
+    print(word)
+    bWord = word
     # for x in bWord:
     #     if x =='!':
     #         bWord=bWord[:-1]
@@ -157,10 +158,11 @@ def filipino_word_checker(tokens):
     for key, value in tokens.items():
         isWordToSearch = key
         if isAllVowels(key):
+            temp[key]['isDictionaryWord'] = False
             temp[key]['isStopword'] = True
             continue
         if value['isStopword']:
-            temp[key]['isDictionaryWord'] = True
+            temp[key]['isDictionaryWord'] = False
             continue
         if binary_search2(tagalog_words,isWordToSearch) > 0: 
             temp[key]['isDictionaryWord'] = True
@@ -225,7 +227,7 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = 'Pucha nakita ko nanaman si Binay. 131231 ???????'
+    sentence = "jakolero tikolero yero yelo pero babaehan kababaihan lalakehan kalalakihan kinalakihan  artilyero programero kabalyero inhinyero praktisyunero"#Pucha nakita b0bo!! t3ngene g@g0 t@ng@!! ko na kokey kapal si Binay. 131231 ???????'
     # sentence = " kahit Ş卄𝓲丅 tangina kapangggitan pikpik pekpek katanggggahan nognog 𝕥𝕒𝕟𝕘𝕚𝕟𝕒 𝕞𝕠"#kagandahan prin t@r@ntado 𝕥𝕒𝕟𝕘𝕚𝕟𝕒𝕞𝕠 kame ᴛᴀɴɢɪɴᴀ"
     # stopwords = ' '.join(filipino_stopwords)
     

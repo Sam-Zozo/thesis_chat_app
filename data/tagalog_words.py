@@ -12950,6 +12950,7 @@ tagalog_words=[
 "kapaklahan",
 "kapakumbaan",
 "kapakumbabaan",
+"kapal",
 "kapal ng mukha",
 "kapal-lupa",
 "kapalagayang-loob",
