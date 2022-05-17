@@ -114,6 +114,8 @@ def tagalog_stemmer(tokens):
             continue
         if not value['isLeet']:
             l.append(key)
+        elif not value['originalWord']:
+            continue
         else:
             l.append(value['originalWord'])
     ls = stemmer('3', l, '1')
@@ -130,7 +132,7 @@ def stopwords_checker(tokens):
     temp=tokens
     for key, value in tokens.items():
         toSearch = key
-        if toSearch in filipino_stopwords or len(toSearch) <= 3:
+        if toSearch in filipino_stopwords or len(toSearch) <= 3 or not value.get('rootWord'):
             temp[key]['isStopword'] = True
             continue
         if value['rootWord'] and value['rootWord'] != key:
@@ -223,8 +225,8 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    # sentence = 'bobohan bobotante kabobohan .bo.bo pakyu kaululan gaggggaaaa' # bbm 88m ibon putang-!na mo na lumilipad ay t4rant@do odatnarat ogag G@go ka hinayup4k ka'
-    sentence = " kahit Ş卄𝓲丅 tangina kapangggitan pikpik pekpek katanggggahan nognog 𝕥𝕒𝕟𝕘𝕚𝕟𝕒 𝕞𝕠"#kagandahan prin t@r@ntado 𝕥𝕒𝕟𝕘𝕚𝕟𝕒𝕞𝕠 kame ᴛᴀɴɢɪɴᴀ"
+    sentence = 'Pucha nakita ko nanaman si Binay. 131231 ???????'
+    # sentence = " kahit Ş卄𝓲丅 tangina kapangggitan pikpik pekpek katanggggahan nognog 𝕥𝕒𝕟𝕘𝕚𝕟𝕒 𝕞𝕠"#kagandahan prin t@r@ntado 𝕥𝕒𝕟𝕘𝕚𝕟𝕒𝕞𝕠 kame ᴛᴀɴɢɪɴᴀ"
     # stopwords = ' '.join(filipino_stopwords)
     
     #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
