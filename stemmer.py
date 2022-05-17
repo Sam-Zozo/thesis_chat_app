@@ -424,11 +424,11 @@ def clean_stemmed(token, CLEANERS, REPITITION):
 	global PERIOD_FLAG
 	global PASS_FLAG
 
-	CC_EXP = ['gl', 'gr', 'ng', 'kr', 'kl', 'kw', 'ts', 'tr', 'pr', 'sw', 'sy'] # Consonant + Consonant Exceptions
+	CC_EXP = ['gl', 'gr', 'ng', 'kr', 'bw', 'kl', 'kw', 'ts', 'tr', 'pr', 'sw', 'sy'] # Consonant + Consonant Exceptions
 
 	# if token[-1] == '.' and PASS_FLAG == False:
 	# 	PERIOD_FLAG = True
-	
+
 	if not check_vowel(token[-1]) and not check_consonant(token[-1]):
 		CLEANERS.append(token[-1])
 		token = token[0:-1]
@@ -581,7 +581,7 @@ if __name__ == "__main__":
 	# stemmer(mode, source, info_dis)
 	#s =  'bibilogan bibilugan Animasyong animasyong bibilogan bibilogan bibilugan purong larong balitang balitaan solusyonan babalikan babawasan babayaran'#sila sa paghahanap ng posibleng gamot sa malubhang sakit ng dinaramdam ng kanyang ina.'
 	s = 'niyong nyong bilang! in?yong? nitong tayong kagastusan.'#kagastos nakakasikat napakasakit nakakaantok'
-	s2 = 'katangahan kabobohan katarantaduhan'
+	s2 = 'katangahan kagandahan gagahan katayuan bwisit kabobohan katarantaduhan'
 	# s2 = s2.split(' ')
 	print(stemmer('2', s2, '1'))
 
