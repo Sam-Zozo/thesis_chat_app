@@ -16,7 +16,7 @@ alt_chars = {
     'a':['à', '4', 'ᴀ', '@', '^', 'á', 'λ', '∂', 'æ', 'ä', '*'],
     'b':['8', '⒝', '൫', 'ß', 'ḃ', 'v'],
     'd':['ḋ', 'ď', 'ḋ', 'ḏ', 'ḓ', 'cl', 'ð', '∂', 'ð', 'ɗ', 'ḋ', 'ð'],
-    'e':['3', '&', 'é', '€', 'ii', 'ə', '£', '*', 'ɇ'],
+    'e':['3', '&', 'é', '€',  'ə', '£', '*', 'ɇ'],
     'f':['ƒ', '}', 'f', 'ƒ', 'ḟ', 'ḟ', 'ⓕ'],   
     'g':['6', '9', 'q','ɢ', 'ĝ', 'ǧ', 'ḡ', 'ģ', 'ǥ', 'ɠ'],
     'h':['卄', '#', 'ḥ', 'ḫ', 'ⱨ', 'ḣ', 'ĥ', 'ȟ', 'ħ'], 
@@ -72,11 +72,8 @@ def is_leet(word):
 
 # character level translation of leet to tagalog
 def word_leet_to_tagalog(word):
-    print(word)
-    # x = ['-','.','<','>',',','?','}',']','[','{','=','_','"',':']
     word = re.sub('[-.<>,?}\]\[{=_\'\":]', '', word) 
     word = word.replace('()','o')
-    print(word)
     bWord = word
     for char in word:
         char_leet_equivalent_dict = filter_the_dict(alt_chars, lambda elem: char in elem[1])
@@ -237,7 +234,8 @@ if __name__ == "__main__":
     for key, value in tokens.items():
         print(key, value)
     print('time: ', end - start)
-
+    print('Sentence: Ako ay magaling sumayaw')
+    print('Tokenized: ', whitespace_tokenizer('ako ay magaling sumayaw'))
    # print(sentence)
    # for key, value in tokens.items():
         # if value['isProfane'] == True:
