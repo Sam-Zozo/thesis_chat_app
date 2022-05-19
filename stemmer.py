@@ -33,7 +33,7 @@ PREFIX_SET = [
 	'nag', 'man',
 	'may', 'ma',
 	'na', 'ni',
-	'pa', 'ka',
+	 'pa','ka',
 	'um', 'in',
 	'i',
 ]
@@ -581,7 +581,7 @@ if __name__ == "__main__":
 	# stemmer(mode, source, info_dis)
 	#s =  'bibilogan bibilugan Animasyong animasyong bibilogan bibilogan bibilugan purong larong balitang balitaan solusyonan babalikan babawasan babayaran'#sila sa paghahanap ng posibleng gamot sa malubhang sakit ng dinaramdam ng kanyang ina.'
 	s = 'niyong nyong bilang! in?yong? nitong tayong kagastusan.'#kagastos nakakasikat napakasakit nakakaantok'
-	s2 = 'katangahan kagandahan gagahan katayuan bwisit kabobohan katarantaduhan'
+	s2 = 'pakyooo kyooo'#'katangahan kagandahan gagahan katayuan bwisit kabobohan katarantaduhan'
 	# s2 = s2.split(' ')
 	print(stemmer('2', s2, '1'))
 

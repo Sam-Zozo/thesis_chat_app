@@ -49,9 +49,6 @@ def to_lowercase(string):
 def leet_checker(tokens):
     temp = tokens
     for key in temp:
-        # if not unicodedata.is_normalized('NFKD',key):
-        #     x=unicodedata.normalize('NFKD', key).encode('ASCII', 'ignore').decode()
-        #     print(x)
         if is_leet(key): # if not normal word
             temp[key] = {'isLeet':  True, 'originalWord': str(word_leet_to_tagalog(key))}
         else:
@@ -60,18 +57,16 @@ def leet_checker(tokens):
 
 def is_leet(word):
     c = 'wertyuiopasdghklbnm'
-    # ctr = 0
     if word.isnumeric():
         return False
     for char in word:
         if not char in c:
-            # ctr +=1
-            # if ctr >= 2: 
             return True
     return False
 
 # character level translation of leet to tagalog
 def word_leet_to_tagalog(word):
+    
     word = re.sub('[-.<>,?}\]\[{=_\'\":]', '', word) 
     word = word.replace('()','o')
     bWord = word
@@ -93,22 +88,16 @@ def filter_the_dict(dictObj, callback):
             newDict[key] = value
     return newDict
 
-def is_tagalog_characters(word):
-    tag_char = 'wertyuiopasdghklbnm'
-    isAllTagChar = False
-    for i in word:
-        if i in tag_char:
-            isAllTagChar = True
-    return isAllTagChar
 
 def tagalog_stemmer(tokens):
     l = list()
     temp = tokens
     for key, value in temp.items():
-    
+        if value['isStopword']:
+            continue
         if not value['isLeet']:
             l.append(key)
-        elif not value['originalWord']:
+        elif not value.get('originalWord'):
             continue
         else:
             l.append(value['originalWord'])
@@ -119,32 +108,17 @@ def tagalog_stemmer(tokens):
                 temp[key]['rootWord'] = dictionary['root']
             elif value.get('originalWord') and dictionary['word'] == value['originalWord']:
                 temp[key]['rootWord'] = dictionary['root']
+            else: temp[key]['rootWord'] = key
     return temp
 
 def stopwords_checker(tokens):
-
     temp=tokens
-    for key, value in tokens.items():
-        toSearch = key
-        if toSearch in filipino_stopwords  or not value.get('rootWord'):
-            temp[key]['isStopword'] = True
-            continue
-        if value['rootWord'] and value['rootWord'] != key:
-            toSearch = value['rootWord']
-        if toSearch in filipino_stopwords :
+    for key in tokens.keys():
+        if binary_search2(filipino_stopwords,key) > 0:
             temp[key]['isStopword'] = True
         else:
             temp[key]['isStopword'] = False
     return temp
-def isAllVowels(word):
-    count = 0
-    for c in word:
-        if c in "aeiou":
-            count+=1
-    if count == len(word):
-        return True
-    else:
-        return False
 
 def filipino_word_checker(tokens):
     temp=tokens
@@ -156,24 +130,13 @@ def filipino_word_checker(tokens):
         if binary_search2(tagalog_words,isWordToSearch) > 0: 
             temp[key]['isDictionaryWord'] = True
             continue
+        # if value.get('originalWord'):
         isWordToSearch = value['rootWord']
         if binary_search2(tagalog_words,isWordToSearch) > 0: 
             temp[key]['isDictionaryWord'] = True
         else:
             temp[key]['isDictionaryWord'] = False
-    return temp
-
-def binary_search(arr, lower_bound, upper_bound, word):
-    if upper_bound >= lower_bound:
-        mid = (upper_bound + lower_bound) // 2
-        if arr[mid] == word:
-            return mid
-        elif arr[mid] > word:
-            return binary_search(arr, lower_bound, mid - 1, word)
-        else:
-            return binary_search(arr, mid + 1, upper_bound, word)
-    else:
-        return -1   
+    return temp 
 
 def binary_search2(arr, x):
     low = 0
@@ -194,10 +157,20 @@ def init_default_values(tokens):
         tokens[key]['isProfane'] = False
     return tokens
 
+def isAllVowels(word):
+    count = 0
+    for c in word:
+        if c in "aeiou":
+            count+=1
+    if count == len(word):
+        return True
+    else:
+        return False
+
 def clean_text(string):
     threshold = 0.8
     string = to_lowercase(string)
-    tokens = init_default_values(filipino_word_checker(stopwords_checker(tagalog_stemmer(leet_checker(whitespace_tokenizer(string))))))
+    tokens = init_default_values(filipino_word_checker(tagalog_stemmer(stopwords_checker(leet_checker(whitespace_tokenizer(string))))))
     # tokens = init_default_values(filipino_word_checker(stopwords_checker(leet_checker(whitespace_tokenizer(string)))))
     for key, value in tokens.items():
         if value['isStopword'] == False and value['isDictionaryWord'] == False: #if not stopword AND not in dictionary
@@ -216,7 +189,8 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = "iniyot iyutan 13514 isaw sawsaw sawsawan tae sya taong dame taena tameme kataon taon kataga kalinga kalawakan bbm tao tasa"#Pucha nakita b0bo!! t3ngene g@g0 t@ng@!! ko na kokey kapal si Binay. 131231 ???????'
+    sentence = "?????? tangina mo p3tsa g@g0  !* !@#$^&*() {O:WQESAD tang@"    
+    # sentence = "pakyu kanilang ang ng T@nga pakyuu pakyooo paakyoo "#Pucha nakita b0bo!! t3ngene g@g0 t@ng@!! ko na kokey kapal si Binay. 131231 ???????'
     # sentence = " kahit Ş卄𝓲丅 tangina kapangggitan pikpik pekpek katanggggahan nognog 𝕥𝕒𝕟𝕘𝕚𝕟𝕒 𝕞𝕠"#kagandahan prin t@r@ntado 𝕥𝕒𝕟𝕘𝕚𝕟𝕒𝕞𝕠 kame ᴛᴀɴɢɪɴᴀ"
     # sentence = ' '.join(raw_profanity)
     
