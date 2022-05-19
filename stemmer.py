@@ -99,7 +99,7 @@ def stemmer(mode, source, info_dis=None):
 	for token in tokens:		
 		word_info["word"] = token
 		token 	 = token.lower()
-		if (PERIOD_FLAG == False and token[0].islower()):
+		if (PERIOD_FLAG == False ):
 
 					
 			du1_stem = clean_duplication(token, DUPLICATE)
@@ -171,6 +171,90 @@ def stemmer(mode, source, info_dis=None):
 	# write_file(stemmed, word_root, root_only)
 	# print('Accuracy: ' + str(validate(root_only, errors)) + '%')
 	# print('Errors: ' + (str(set(errors)) if len(errors) >= 1 else '[]'))
+
+	return stemmed, root_only
+
+def stemmer_word(token):
+	global PERIOD_FLAG
+	global PASS_FLAG
+
+	word_info    = {}
+	stemmed      = []
+	word_root    = []
+	root_only    = []
+	errors       = []
+	pre_stem     = inf_stem = suf_stem = rep_stem = \
+		du1_stem = du2_stem = cle_stem = '-'
+
+	PREFIX     = []
+	INFIX      = []
+	SUFFIX     = []
+	DUPLICATE  = []
+	REPITITION = []
+	CLEANERS   = []
+	word_info["word"] = token
+	# token 	 = token.lower()
+	if (PERIOD_FLAG == False ):
+		du1_stem = clean_duplication(token, DUPLICATE)
+		pre_stem = clean_prefix(du1_stem, PREFIX)
+		rep_stem = clean_repitition(pre_stem, REPITITION)
+		inf_stem = clean_infix(rep_stem, INFIX)
+		rep_stem = clean_repitition(inf_stem, REPITITION)
+		suf_stem = clean_suffix(rep_stem, SUFFIX)
+		du2_stem = clean_duplication(suf_stem, DUPLICATE)
+		cle_stem = clean_stemmed(du2_stem, CLEANERS, REPITITION)
+		cle_stem = clean_duplication(cle_stem, DUPLICATE)
+
+		if '-' in cle_stem:
+			cle_stem.replace('-', '')
+
+		# if stemmed is wrong, go to 2nd pass
+		if check_validation(cle_stem) == False:
+			PASS_FLAG = True
+			du1_stem  = clean_duplication(cle_stem, DUPLICATE)
+			pre_stem  = clean_prefix(du1_stem, PREFIX)
+			rep_stem  = clean_repitition(pre_stem, REPITITION)
+			inf_stem  = clean_infix(rep_stem, INFIX)
+			rep_stem  = clean_repitition(inf_stem, REPITITION)
+			suf_stem  = clean_suffix(rep_stem, SUFFIX)
+			du2_stem  = clean_duplication(suf_stem, DUPLICATE)
+			cle_stem  = clean_stemmed(du2_stem, CLEANERS, REPITITION)
+			cle_stem  = clean_duplication(cle_stem, DUPLICATE)
+
+		word_info["root"]   = cle_stem
+		word_info["prefix"] = PREFIX
+		word_info["infix"]  = INFIX
+		word_info["suffix"] = SUFFIX
+		word_info["repeat"] = REPITITION
+		word_info["dupli"]  = DUPLICATE
+		word_info["clean"]  = CLEANERS
+
+		PASS_FLAG  = False
+		PREFIX     = []
+		INFIX      = []
+		SUFFIX     = []
+		DUPLICATE  = []
+		REPITITION = []
+		CLEANERS   = []
+
+	else:
+		PERIOD_FLAG = False
+		cle_stem = clean_stemmed(token, CLEANERS, REPITITION)
+		word_info["root"]   = token
+		word_info["prefix"] = '[]'
+		word_info["infix"]  = '[]'
+		word_info["suffix"] = '[]'
+		word_info["repeat"] = '[]'
+		word_info["dupli"]  = '[]'
+		word_info["clean"]   = '[]'
+
+	stemmed.append(word_info)
+	root_only.append(word_info["root"])
+	word_root.append(word_info["word"] + ' : ' + word_info["root"])
+
+	word_info = {}
+	pre_stem = inf_stem = suf_stem = rep_stem = \
+	du1_stem = du2_stem = cle_stem = '-'
 
 	return stemmed, root_only
 
@@ -583,7 +667,8 @@ if __name__ == "__main__":
 	s = 'niyong nyong bilang! in?yong? nitong tayong kagastusan.'#kagastos nakakasikat napakasakit nakakaantok'
 	s2 = 'pakyooo kyooo'#'katangahan kagandahan gagahan katayuan bwisit kabobohan katarantaduhan'
 	# s2 = s2.split(' ')
-	print(stemmer('2', s2, '1'))
+	# print(stemmer('2', s2, '1'))
+	print(stemmer_word('bibilogan'))
 
 """
 TODOS:

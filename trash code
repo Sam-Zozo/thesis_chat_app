@@ -293,3 +293,49 @@
 #     'v':['\\/','\\\\//','√'],
 #     'w':['\\/\\/','vv','\\^/','\\x/','\\|/','\\_|_/','\\_l_/','\\//\\//','\\_:_/',']i[','uu','Ш','ɰ','\\/1/','1/1/'],
 #     'y':['i','`/','Ψ','φ','λ','Ч','¥'],
+
+
+    # x = 'Ako ay magaling sumayaw sab ni PRRD'
+    # print('Sentence: ',x)
+    # print('Tokenized: ', whitespace_tokenizer(x.lower()))
+   # print(sentence)
+   # for key, value in tokens.items():
+        # if value['isProfane'] == True:
+         #   print(key, value)
+
+    # bWord = re.sub('[.,?\'\"]', '', 'bWord"')
+    # print(bWord)
+    # word = 'katalinuhan?'
+    # # if word[word-1]:
+    # print(word[len(word)-1])
+# aeiou aaaaa oo aoie 
+# print('817'.isnumeric())
+# print(string.punctuation)
+# print(word_leet_to_tagalog('pu7@n6!na'))
+# title = 'es and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
+# sample = 'puta qaqo yayamanin jakol hhhh mahal pakiskis pakita g@go'
+# tokens = whitespace_tokenizer(sample)
+# tokens = leet_checker(tokens)
+# tokens = stopwords_checker(tokens)
+# tokens = filipino_word_checker(tokens)
+# tokens = init_default_values(tokens)
+# for key, value in tokens.items():
+#         if value['isStopword'] == False and value['isDictionaryWord'] == False:
+#             if value['isLeet'] == True:
+#                 x = [x for x in raw_profanity if jaro_Winkler(value['originalWord'],x) > 0.78]
+#                 if x:
+#                     tokens[key]['isProfane']  = True
+#                     print(x)
+#                 else:
+#                     tokens[key]['isProfane']  = False
+#             else:
+#                 x = [x for x in raw_profanity if jaro_Winkler(key,x) > 0.78]
+#                 if x:
+#                     tokens[key]['isProfane']  = True
+#                     print(x)
+#                 else:
+#                     tokens[key]['isProfane']  = False
+#         else:
+#             continue
+# for key ,value in tokens.items():
+#     print(key, value)
