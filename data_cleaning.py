@@ -175,8 +175,8 @@ def clean_text(string):
     for key, value in tokens.items():
         if value['isStopword'] == False and value['isDictionaryWord'] == False: #if not stopword AND not in dictionary
             if isAllVowels(key) or key.isnumeric():
+                tokens[key]['isProfane']  = False
                 continue
-            
             x = [x for x in raw_profanity if jaro_Winkler(value['rootWord'],x) >= threshold]
             if x:
                 tokens[key]['isProfane']  = True

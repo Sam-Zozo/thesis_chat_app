@@ -3834,7 +3834,6 @@ tagalog_words=[
 "bulbo",
 "bulbog",
 "bulbok",
-"bulbol",
 "bulbugin",
 "buldog",
 "buldoser",
