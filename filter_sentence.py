@@ -196,7 +196,7 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = "?????? bu bu bibilogan kagandahan katangahan k@t@ngah@n umagang napakahusay tangina "#motta tae t@  ta e@ ea ae p3tsa g@g0  !* !@#$^&*() {O:WQESAD tang@"    
+    sentence = "kanto canton bu bu bibilogan kagandahan katangahan k@t@ngah@n umagang napakahusay tangina "#motta tae t@  ta e@ ea ae p3tsa g@g0  !* !@#$^&*() {O:WQESAD tang@"    
     # sentence = "pakyu kanilang ang ng T@nga pakyuu pakyooo paakyoo "#Pucha nakita b0bo!! t3ngene g@g0 t@ng@!! ko na kokey kapal si Binay. 131231 ???????'
     # sentence = " kahit Ş卄𝓲丅 tangina kapangggitan pikpik pekpek katanggggahan nognog 𝕥𝕒𝕟𝕘𝕚𝕟𝕒 𝕞𝕠"#kagandahan prin t@r@ntado 𝕥𝕒𝕟𝕘𝕚𝕟𝕒𝕞𝕠 kame ᴛᴀɴɢɪɴᴀ"
     # sentence = ' '.join(raw_profanity)

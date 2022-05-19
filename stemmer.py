@@ -33,7 +33,7 @@ PREFIX_SET = [
 	'nag', 'man',
 	'may', 'ma',
 	'na', 'ni',
-	 'pa','ka',
+	 'pa',
 	'um', 'in',
 	'i',
 ]
