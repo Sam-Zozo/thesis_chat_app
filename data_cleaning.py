@@ -105,18 +105,17 @@ def tagalog_stemmer(tokens):
     l = list()
     temp = tokens
     for key, value in temp.items():
-        if len(key)<=3:
-            continue
+    
         if not value['isLeet']:
             l.append(key)
         elif not value['originalWord']:
             continue
         else:
             l.append(value['originalWord'])
-    ls = stemmer('3', l, '1')
+    ls = stemmer('3', l)
     for key, value in tokens.items():
         for dictionary in ls[0]:
-            if dictionary['word'] == key: #nakapa typo?
+            if dictionary['word'] == key: 
                 temp[key]['rootWord'] = dictionary['root']
             elif value.get('originalWord') and dictionary['word'] == value['originalWord']:
                 temp[key]['rootWord'] = dictionary['root']
@@ -127,12 +126,12 @@ def stopwords_checker(tokens):
     temp=tokens
     for key, value in tokens.items():
         toSearch = key
-        if toSearch in filipino_stopwords or len(toSearch) <= 3 or not value.get('rootWord'):
+        if toSearch in filipino_stopwords  or not value.get('rootWord'):
             temp[key]['isStopword'] = True
             continue
         if value['rootWord'] and value['rootWord'] != key:
             toSearch = value['rootWord']
-        if toSearch in filipino_stopwords or len(toSearch) <= 3:
+        if toSearch in filipino_stopwords :
             temp[key]['isStopword'] = True
         else:
             temp[key]['isStopword'] = False
@@ -151,19 +150,12 @@ def filipino_word_checker(tokens):
     temp=tokens
     for key, value in tokens.items():
         isWordToSearch = key
-        if isAllVowels(key):
-            temp[key]['isDictionaryWord'] = False
-            temp[key]['isStopword'] = True
-            continue
         if value['isStopword']:
             temp[key]['isDictionaryWord'] = False
             continue
         if binary_search2(tagalog_words,isWordToSearch) > 0: 
             temp[key]['isDictionaryWord'] = True
             continue
-        # if value.get('orignalWord') and (binary_search2(tagalog_words,value.get('orignalWord')) )> 0: 
-        #     temp[key]['isDictionaryWord'] = True
-        #     continue
         isWordToSearch = value['rootWord']
         if binary_search2(tagalog_words,isWordToSearch) > 0: 
             temp[key]['isDictionaryWord'] = True
@@ -209,6 +201,9 @@ def clean_text(string):
     # tokens = init_default_values(filipino_word_checker(stopwords_checker(leet_checker(whitespace_tokenizer(string)))))
     for key, value in tokens.items():
         if value['isStopword'] == False and value['isDictionaryWord'] == False: #if not stopword AND not in dictionary
+            if isAllVowels(key) or key.isnumeric():
+                continue
+            
             x = [x for x in raw_profanity if jaro_Winkler(value['rootWord'],x) >= threshold]
             if x:
                 tokens[key]['isProfane']  = True
@@ -221,9 +216,9 @@ def clean_text(string):
 
 if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
-    sentence = "jakolero gag() kinabukasan tikolero yero yelo pero babaehan kababaihan lalakehan kalalakihan kinalakihan  artilyero programero kabalyero inhinyero praktisyunero"#Pucha nakita b0bo!! t3ngene g@g0 t@ng@!! ko na kokey kapal si Binay. 131231 ???????'
+    sentence = "iniyot iyutan 13514 isaw sawsaw sawsawan tae sya taong dame taena tameme kataon taon kataga kalinga kalawakan bbm tao tasa"#Pucha nakita b0bo!! t3ngene g@g0 t@ng@!! ko na kokey kapal si Binay. 131231 ???????'
     # sentence = " kahit Ş卄𝓲丅 tangina kapangggitan pikpik pekpek katanggggahan nognog 𝕥𝕒𝕟𝕘𝕚𝕟𝕒 𝕞𝕠"#kagandahan prin t@r@ntado 𝕥𝕒𝕟𝕘𝕚𝕟𝕒𝕞𝕠 kame ᴛᴀɴɢɪɴᴀ"
-    # stopwords = ' '.join(filipino_stopwords)
+    # sentence = ' '.join(raw_profanity)
     
     #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
     start = time.time()    
@@ -234,8 +229,9 @@ if __name__ == "__main__":
     for key, value in tokens.items():
         print(key, value)
     print('time: ', end - start)
-    print('Sentence: Ako ay magaling sumayaw')
-    print('Tokenized: ', whitespace_tokenizer('ako ay magaling sumayaw'))
+    # x = 'Ako ay magaling sumayaw sab ni PRRD'
+    # print('Sentence: ',x)
+    # print('Tokenized: ', whitespace_tokenizer(x.lower()))
    # print(sentence)
    # for key, value in tokens.items():
         # if value['isProfane'] == True:

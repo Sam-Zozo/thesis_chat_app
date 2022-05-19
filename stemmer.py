@@ -54,7 +54,7 @@ SUFFIX_SET = [
 PERIOD_FLAG = False
 PASS_FLAG = False
 
-def stemmer(mode, source, info_dis):
+def stemmer(mode, source, info_dis=None):
 	""" 
 		Stems the tokens in a sentence.
 			mode: if from .txt or string or list

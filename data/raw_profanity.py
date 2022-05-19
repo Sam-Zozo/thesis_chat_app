@@ -77,7 +77,6 @@ raw_profanity = [
 "tarantado",
 "tigang",
 "timang",
-"tite",
 "titi",
 "totnak",
 "tungaw",
@@ -86,8 +85,9 @@ raw_profanity = [
 "ungas",
 "ungol",
 "utin",
-"mangmang"
-,"tikol"
+"mangmang",
+"tikol",
+"pepe"
 ]
 # raw_profanity = [
 # "amputa",

@@ -40737,7 +40737,6 @@ tagalog_words=[
 "tigaling tabluwas",
 "tigam",
 "tigambay",
-"tigang",
 "tigapat",
 "tigas",
 "tigas ng katawan",
