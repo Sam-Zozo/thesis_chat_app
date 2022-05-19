@@ -74,7 +74,6 @@ raw_profanity = [
 "siraulo",
 "suso",
 "tae",
-"taena",
 "tamod",
 "tanga",
 "tangina",
