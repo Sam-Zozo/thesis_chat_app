@@ -508,7 +508,7 @@ def clean_stemmed(token, CLEANERS, REPITITION):
 	global PERIOD_FLAG
 	global PASS_FLAG
 
-	CC_EXP = ['gl', 'gr', 'ng', 'kr', 'bw', 'kl', 'kw', 'ts', 'tr', 'pr', 'sw', 'sy'] # Consonant + Consonant Exceptions
+	CC_EXP = ['gl', 'gr', 'ng', 'kr', 'bw', 'kl', 'kw', 'ts', 'tr', 'pr', 'sw' ,'sy'] # Consonant + Consonant Exceptions
 
 	# if token[-1] == '.' and PASS_FLAG == False:
 	# 	PERIOD_FLAG = True
@@ -585,9 +585,9 @@ def clean_stemmed(token, CLEANERS, REPITITION):
 			CLEANERS.append('h')
 			token = token[0:-1]
 
-		if any(token[0:2] != CC for CC in CC_EXP) and check_consonant(token[0:2]):
-			CLEANERS.append(token[0:2])
-			token = token[1:]
+		# if any(token[0:2] != CC for CC in CC_EXP) and check_consonant(token[0:2]):
+		# 	CLEANERS.append(token[0:2])
+		# 	token = token[1:]
 
 	return token
 

@@ -36,7 +36,7 @@ def jaro_distance(s1, s2):
     point = 0
     # Compute for transpositions.
     for i in range(len1):
-        if (hash_s1[i]):
+        if (hash_s1[i]): # 
             while (hash_s2[point] == 0):
                 point += 1
             if (s1[i] != s2[point]):
@@ -89,8 +89,33 @@ if __name__ == '__main__':
     # \abcd
     # V-I-A-G-R-A
 
-    print(jaro_Winkler('pikpik', 'pekpek'))
-    print(jaro_Winkler('gaaaaaagggggoooo', 'gago'))
+    print(jaro_Winkler('tangga', 'tanga'))
+    # print(jaro_Winkler('gaaaaaagggggoooo', 'gago'))
+
+    # gago      gaggoo
+    # [0,0,0,0] [0,0,0,0,0,0]
+    # 0
+    # 0
+    #            0   True               point=1
+    #            0   True               point 6
+    # if gago[0] !=  gaggoo[6]
+    # if g != o     transpo=1           point=7
+    # 
+
+    # 0
+    # 0
+    # 
+
+    # for i in range(len1):
+    #     if (hash_s1[i]): // if 0
+    #         while (hash_s2[point] == 0):
+    #             point += 1
+    #         if (s1[i] != s2[point]):
+    #             transposition += 1
+    #         point += 1
+    # transposition = transposition//2
+    # return (match/ len1 + match / len2 + (match - transposition) / match)/ 3.0
+
     # print(jaro_Winkler('gago', 'kagagohan'))
     # print(jaro_Winkler('Tarantado', 'tarantula'))
     # print(jaro_Winkler('karampot', 'kantot'))
