@@ -90,7 +90,7 @@ if __name__ == '__main__':
     # V-I-A-G-R-A
 
     print(jaro_Winkler('pikpik', 'pekpek'))
-    print(jaro_Winkler('ggaaaaaagggggoooo', 'gago'))
+    print(jaro_Winkler('gaaaaaagggggoooo', 'gago'))
     # print(jaro_Winkler('gago', 'kagagohan'))
     # print(jaro_Winkler('Tarantado', 'tarantula'))
     # print(jaro_Winkler('karampot', 'kantot'))
