@@ -45,7 +45,7 @@ def is_leet(word):
     return False
 # character level translation of leet to tagalog
 def word_leet_to_tagalog(word):
-    word = re.sub('[-.<>,?}\]\[{=_\'\":]', '', word) 
+    word = re.sub('[-.<>,`?}\]\[{=_\'\":]', '', word) 
     word = word.replace('()','o')
     bWord = word
     for char in word:
@@ -95,14 +95,17 @@ def clean_text(sentence):
         if is_leet(key):
             newDict[key]['isLeet'] = True
             res = str(word_leet_to_tagalog(key))
-            if not res:
+            if (not res):
                 res = key
             newDict[key]['originalWord'] = res 
         else:
             newDict[key]['isLeet'] = False
             newDict[key]['originalWord'] = key
-            
-        newDict[key]['isStopword'] = stopwords_checker(key)
+        
+        if len(newDict[key]['originalWord']) <= 4 and [x for x in '-.<>,`?}\]\[{=_\'\"::' if x in newDict[key]['originalWord']]:
+             newDict[key]['isStopword'] = True
+        else:
+            newDict[key]['isStopword'] = stopwords_checker(newDict[key]['originalWord'])
 
         if newDict[key]['isStopword']:
             if newDict[key]['isLeet']:
@@ -139,7 +142,7 @@ if __name__ == "__main__":
     # sentence = 'ang p3tsa g@g0 ay pebrero ng Tite-sais,  d@law@ng l!bo\'t kantotan dos Unshaded votes and votes for Mayor Duterte goes to Mar Roxas according to some reports of ballot tests.  #AyawSaDILAW,1Na-Binay ??????'
     # sentence = "    bu bu ???? bibilogan at ko pa p@ k@gandah@n kagandahan katangahan k@t@ngah@n umagang napakahusay tangina "#motta tae t@  ta e@ ea ae p3tsa g@g0  !* !@#$^&*() {O:WQESAD tang@"    
     # sentence = "pakyu kanilang ang ng T@nga pakyuu pakyooo paakyoo "#Pucha nakita b0bo!! t3ngene g@g0 t@ng@!! ko na kokey kapal si Binay. 131231 ???????'
-    sentence = "kagandahan bwiset kkkatanggahan gggaggoooo kabaliwan katttanggahan katangahan kasabwat kasabwat " #lorya glukos grabe  granadilya atraso pakla pakyaw gripo syota bwaya granada bwiset klase globo grado grava swak swerte buweset"#kagandahan prin t@r@ntado 𝕥𝕒𝕟𝕘𝕚𝕟𝕒𝕞𝕠 kame ᴛᴀɴɢɪɴᴀ"
+    sentence = '???? katangahan >>> <<< ... ,,, ]]] [[[  }}} {{{ ```' #lorya glukos grabe  granadilya atraso pakla pakyaw gripo syota bwaya granada bwiset klase globo grado grava swak swerte buweset"#kagandahan prin t@r@ntado 𝕥𝕒𝕟𝕘𝕚𝕟𝕒𝕞𝕠 kame ᴛᴀɴɢɪɴᴀ"
     # 'gl', 'gr', 'ng', 'kr', 'bw', 'kl', 'kw', 'ts', 'tr', 'pr', 'sw' ,'sy'
     # sentence = ' '.join(raw_profanity)
     #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
