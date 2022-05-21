@@ -125,7 +125,7 @@ def clean_text(sentence):
         #     newDict[key]['isProfane'] = False 
         #     continue
 
-        if len(newDict[key]['originalWord']) <= 4 and check(key,'-.<>,`?}\]\[{=_\'\"::') or newDict[key]['originalWord'].isnumeric():
+        if len(newDict[key]['originalWord']) <= 4 and check(key,'-.<>%)(,`?}\]\[{=_\'\"::') or newDict[key]['originalWord'].isnumeric():
             newDict[key]['isStopword'] = True
         else:
             newDict[key]['isStopword'] = stopwords_checker(newDict[key]['originalWord'])
@@ -169,7 +169,7 @@ if __name__ == "__main__":
     # 'gl', 'gr', 'ng', 'kr', 'bw', 'kl', 'kw', 'ts', 'tr', 'pr', 'sw' ,'sy'
     # sentence = ' '.join(raw_profanity)
     #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
-    sentence = '300 1234 123 !!! ??? -_- pota 30000 3000 222222 si Mar Roxas??!! palaki kadilaw'
+    sentence = '300 %%% ((( )))) 1234 123 !!! ??? -_- pota 30000 3000 222222 si Mar Roxas??!! palaki kadilaw'
     # tk = WhitespaceTokenizer()
     # print()
     # print('Sentence: ', sentence)
