@@ -3,7 +3,7 @@ import time
 from data.filipino_stopwords import filipino_stopwords
 from data.tagalog_words import tagalog_words
 from data.raw_profanity import raw_profanity
-from stemmer import stemmer_word
+from stemmer import CONSONANTS, stemmer_word
 from jaro_winkler import jaro_Winkler
 from nltk.tokenize import WhitespaceTokenizer
 
@@ -86,6 +86,16 @@ def binary_search2(arr, x):
             return mid
     return -1
 
+def check(word1, word2):
+    count = 0
+    for c in word1:
+        if c in word2:
+            count+=1
+    if count == len(word1):
+        return True
+    else:
+        return False
+
 def clean_text(sentence):
     tokens = whitespace_tokenizer(sentence)
     newDict = tokens
@@ -102,8 +112,21 @@ def clean_text(sentence):
             newDict[key]['isLeet'] = False
             newDict[key]['originalWord'] = key
         
-        if len(newDict[key]['originalWord']) <= 4 and [x for x in '-.<>,`?}\]\[{=_\'\"::' if x in newDict[key]['originalWord']]:
-             newDict[key]['isStopword'] = True
+        # if (len(key)<=4 or key.isnumeric() or check(key,'aeiou')) :
+        #     newDict[key]['isStopword'] = True
+        #     newDict[key]['rootWord'] = key
+        #     newDict[key]['isDictionaryWord'] = False
+        #     newDict[key]['isProfane'] = False   
+        #     continue
+        # if check(key,'-.<>,`?}\]\[{=_\'\"::'):
+        #     newDict[key]['isStopword'] = True
+        #     newDict[key]['rootWord'] = key
+        #     newDict[key]['isDictionaryWord'] = False
+        #     newDict[key]['isProfane'] = False 
+        #     continue
+
+        if len(newDict[key]['originalWord']) <= 4 and check(key,'-.<>,`?}\]\[{=_\'\"::') or newDict[key]['originalWord'].isnumeric():
+            newDict[key]['isStopword'] = True
         else:
             newDict[key]['isStopword'] = stopwords_checker(newDict[key]['originalWord'])
 
@@ -146,7 +169,7 @@ if __name__ == "__main__":
     # 'gl', 'gr', 'ng', 'kr', 'bw', 'kl', 'kw', 'ts', 'tr', 'pr', 'sw' ,'sy'
     # sentence = ' '.join(raw_profanity)
     #sentence  = 'kagastos nak@kasik@t ng tang!na ang napakasakit nakakaantok'
-    sentence = '2nd si Mar Roxas??!! Tangina??!! #Halalan2016 #HalalanResults #DayaangDilaw'
+    sentence = '300 1234 123 !!! ??? -_- pota 30000 3000 222222 si Mar Roxas??!! palaki kadilaw'
     # tk = WhitespaceTokenizer()
     # print()
     # print('Sentence: ', sentence)
