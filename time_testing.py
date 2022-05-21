@@ -1,7 +1,10 @@
+import random
 import time
-from compare import clean_text
+from data_cleaning import clean_text
 from data.raw_profanity import raw_profanity
 from jaro_winkler import jaro_Winkler
+from nltk.tokenize import WhitespaceTokenizer
+from  numpy.random import choice
 test_case = [
     [
     "Ang umaga ay maganda",
@@ -103,24 +106,142 @@ test_case = [
     ],
     
 ]
+
+
+# def test(test_list):
+#     all_average = []
+    
+#     for test in test_list:
+#         per_test_time = []
+        
+#         for t in test:
+#             start = time.time()
+#             res = clean_text(t)
+#             end = time.time()
+#             duration =  end - start
+#             per_test_time.append(duration)
+#         all_average.append(average(per_test_time))
+#     return all_average
+# result = test(test_case)
+# print(result)
+
 def average(score_list):
     return round(sum(score_list) / len(score_list), 4)
 
-def test(test_list):
-    all_average = []
-    
-    for test in test_list:
-        per_test_time = []
-        
-        for t in test:
-            start = time.time()
-            res = clean_text(t)
-            end = time.time()
-            duration =  end - start
-            per_test_time.append(duration)
-        all_average.append(average(per_test_time))
-    return all_average
-result = test(test_case)
+from data.tagalog_words import tagalog_words
+from time_testing_variables import *
+def generateRandomSentence(profanities=None, maxChar=280):
+    sentence = ''
+    maxIndexIndictionary = len(tagalog_words)
+    if profanities:
+        length = len(profanities)-1
+        while(len(sentence) <= maxChar):
+            sentence = sentence + tagalog_words[random.randint(0, maxIndexIndictionary)] + ' '
+            if length >=0:
+                sentence = sentence  + profanities[length] + ' '
+                length-=1
+    else:
+        while(len(sentence) <= maxChar):
+            sentence = sentence + tagalog_words[random.randint(0, maxIndexIndictionary)] + ' '
+    return sentence 
 
-print(result)
+def getTimePerList(testList):
+    start = time.time()
+    for test in testList:
+        res = clean_text(test)
+        # print(res)
+    end = time.time()
+    duration =  end - start
+    return duration
+
+def getTimePerSentence(sentence):
+    start = time.time()
+    res = clean_text(sentence)
+    end = time.time()
+    duration =  end - start
+    return duration
+
+def getTimeTestResult(testSet):
+    timeResultList = []
+    for test in testSet:
+        timeResultList.append(getTimePerSentence(test))
+    return timeResultList
+
+def swapWords(tokens, profanities):
+    x = len(profanities)-1
+    for profanity in profanities:
+        tokens[x] = profanity
+        x-=1
+    return ' '.join(tokens)
+    
+if __name__ == "__main__":
+    print("-------Time Testing-------")
+    # sentence = 'Ako ay may lobo Lumipad sa langit ’Di ko na nakita Pumutok na pala Sayang ang pera ko Binili ng lobo Sa pagkain sana Nabusog pa ako Ako ay may lobo Lumipad sa langit ’Di ko na nakita Pumutok na pala Sayang ang pera ko Binili ng lobo Sa pagkain sana Nabusog pa ako '
+    sentence = 'May tatlong Bibe akong nakita Mataba, mapayat mga bibe Ngunit ang may pakpak Sa likod na iisa Siya ang lider na nagsabi ng Kwak, kwak, kwak. Tayo na sa ilog ang sabi Kumending ng kumending Ang mga bibe Ngunit ang may pakpak Sa likod na iisa'
+    # sentence = #'katoliko pagluluksa mahirap sangkapuluan magpabuwis balagtasan magbigay palayaw tapikin masayad pandiwa ituhog pagkandili nanay tinugis litaw panahon pantubos tahimik magpaalab kalihim punyagi talon tungkol tapang magkauri sukatan pasalungat pagkaputol hilig makalupa gayuma lagim'
+    # sentence = 'salop karayaan bateriya pagkahakhak waligwig paglutas umarkila walang-tawad palipat-lipat duta makalanta pangayod tindera anu-ano surian da kantiyaw pintal mag-andukha paggasgas halawin tituluhan kademonyuhan padalisayin reserbado hilian pagtagumpayan palitaw pagkapiit pagdayo palabas'
+    # sentence = 'magsuyod magkaamos windang ang puso laog maaaring maunawaan nayon papatayin pagsiyap karent makipagbanggaan indonesia karagsinan palaisip paglibot itago lumbang paroon-dili magsakristan diyam mabundol igang lusay himalayin kimpal-kimpalin mag-usap demonyuhin may kaugnayan sa saligang-batas'
+    # sentence = 'kilusin isuam tagareporma iluto pagkaguluhan intensyon binuok konggreso kaang pagkapatapon pawa pampalasyo triduum pabindisyunan kayapahan paragala kabal sa sakit militante pagsasaysay magbugbugan halaghad gayon pala buwis kanormalan nakatayo namatay umabay trangkaso makapulanggos'
+    # sentence = 'magpakagabi magkamas samba empresaryo kadkad opal katapong katsa nalulugod (sa sarili) nagdaan isinop kumunyon tagasalungat rool haluyhoy sangla talabog sagupsop pagkamalamig walang-diwa padalus-dalos suson dapulakin tibok ng dibdib inglisin paramisiyum kalamayo ipaiwi mapagkausap'
+    # print(sentence)
+    tk = WhitespaceTokenizer()
+    tokens = tk.tokenize(sentence)
+
+    testSetNormal = []
+    testSetNormal.append([swapWords(tokens, x) for x in testA1])
+    testSetNormal.append([swapWords(tokens, x) for x in testA2])
+    testSetNormal.append([swapWords(tokens, x) for x in testA3])
+    testSetNormal.append([swapWords(tokens, x) for x in testA4])
+    testSetNormal.append([swapWords(tokens, x) for x in testA5])
+    testSetNormal.append([swapWords(tokens, x) for x in testB1])
+    testSetNormal.append([swapWords(tokens, x) for x in testB2])
+    testSetNormal.append([swapWords(tokens, x) for x in testB3])
+    testSetNormal.append([swapWords(tokens, x) for x in testB4])
+    testSetNormal.append([swapWords(tokens, x) for x in testB5])
+    # print(testSetNormal[0])
+    print(testSetNormal[1])
+    timeResultAveragelist =[]
+    for test in testSetNormal:
+        timeResultList = getTimeTestResult(test)
+        # getTimePerList(test)
+        timeResultAveragelist.append(average(timeResultList))
+    print('Normal Set: ',timeResultAveragelist[:5])
+    print('Altered Set: ',timeResultAveragelist[5:])
+    
+    # testSetNormal = []
+    # testSetNormal.append([generateRandomSentence(x, 28) for x in testA1])
+    # testSetNormal.append([generateRandomSentence(x, 56) for x in testA2])
+    # testSetNormal.append([generateRandomSentence(x, 84) for x in testA3])
+    # testSetNormal.append([generateRandomSentence(x, 112) for x in testA4])
+    # testSetNormal.append([generateRandomSentence(x, 140) for x in testA5])
+    # testSetNormal.append([generateRandomSentence(x, 168) for x in testA6])
+    # testSetNormal.append([generateRandomSentence(x, 196) for x in testA7])
+    # testSetNormal.append([generateRandomSentence(x,224) for x in testA8])
+    # testSetNormal.append([generateRandomSentence(x,252) for x in testA9])
+    # testSetNormal.append([generateRandomSentence(x,280) for x in testA10])
+    # print(testSetNormal[0])
+    # timeResultAveragelist =[]
+    # for test in testSetNormal:
+    #     timeResultList = getTimeTestResult(test)
+    #     # getTimePerList(test)
+    #     timeResultAveragelist.append(average(timeResultList))
+    # print('Normal Set: ',timeResultAveragelist)
+    # testSetAltered = []
+    # testSetAltered.append([generateRandomSentence(x) for x in testB1])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB2])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB3])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB4])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB5])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB6])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB7])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB8])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB9])
+    # testSetAltered.append([generateRandomSentence(x) for x in testB10])
+    # # print(testSetAltered[0])
+    # timeResultAveragelist =[]
+    # for test in testSetAltered:
+    #     timeResultList = getTimeTestResult(test)
+    #     # getTimePerList(test)
+    #     timeResultAveragelist.append(average(timeResultList))
+    # print('Altered Set: ',timeResultAveragelist)
 

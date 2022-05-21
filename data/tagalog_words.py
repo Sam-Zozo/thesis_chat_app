@@ -36225,6 +36225,7 @@ tagalog_words=[
 "puyukan",
 "puyupoy",
 "puyupuyan",
+"pwede",
 "rabbit",
 "rabies",
 "racket",
